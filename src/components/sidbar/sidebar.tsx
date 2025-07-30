@@ -20,7 +20,7 @@ export default function SidebarListItems({ version }: { version: string }) {
           className="w-20 hover:scale-105 duration-100 transition ease-in"
         />
       </Link>
-      {renderSidebar(active).map((menu: SidebarMenuItem) => (
+      {renderSidebar().map((menu: SidebarMenuItem) => (
         <li
           key={menu.id}
           className="group/li"
@@ -28,7 +28,9 @@ export default function SidebarListItems({ version }: { version: string }) {
         >
           <Link
             to={menu.path}
-            className="flex flex-col items-center gap-2 text-xl text-default-text font-bold tracking-wider hover:text-hover-text transition duration-200"
+            className={`flex flex-col items-center gap-2 text-xl font-bold tracking-wider hover:text-hover-text transition duration-200 ${
+              active === menu.id ? "text-hover-text" : "text-default-text"
+            }`}
           >
             {menu.icon}
             {menu.title}

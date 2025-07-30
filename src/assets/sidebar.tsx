@@ -11,7 +11,7 @@ export interface SidebarMenuItem {
   icon: JSX.Element;
 }
 
-export const renderSidebar = (active: string): SidebarMenuItem[] => {
+export const renderSidebar = (): SidebarMenuItem[] => {
   return [
     {
       id: "home",
