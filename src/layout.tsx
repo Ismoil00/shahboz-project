@@ -1,4 +1,4 @@
-// import Sidebar from "../components/sidebar";
+import Sidebar from "./components/sidbar";
 import { Outlet } from "react-router-dom";
 // import NewSessionDetected from "../components/newSessionDetected";
 
@@ -6,7 +6,7 @@ export default function Layout() {
   return (
     <div className="flex">
       {/* <NewSessionDetected /> */}
-      {/* <Sidebar /> */}
+      <Sidebar />
       <div className="flex-1">
         <Outlet />
       </div>

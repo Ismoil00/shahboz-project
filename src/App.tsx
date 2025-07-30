@@ -12,7 +12,7 @@ function App() {
   // const [count, setCount] = useState(0);
 
   return (
-    <div className="app">
+    <div className="app font-body">
       {/* <SessionContextProvider> */}
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -21,7 +21,7 @@ function App() {
           path="/*"
           element={
             // <StatesStoreContextProvider>
-            <ProtectedRoutes>
+            // <ProtectedRoutes>
               <Routes>
                 <Route path="/" element={<Layout />}>
                   <Route index element={<Home />} />
@@ -32,7 +32,7 @@ function App() {
                 </Route>
                 <Route path="*" element={<div>Page not found</div>} />
               </Routes>
-            </ProtectedRoutes>
+            // </ProtectedRoutes>
             // </StatesStoreContextProvider>
           }
         />

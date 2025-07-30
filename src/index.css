@@ -1,1 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
+
+@theme {
+  /* 👕 Font Families */
+  --font-body: "Roboto", sans-serif;
+
+  /* 🎨 Brand Colors */
+  --color-primary: #1e40af;
+  --color-secondary: #f97316;
+  --color-bg: #EEFDFF;
+  --color-default-text: #003A6B;
+  /* --color-hover-text: #ADD8E6; */
+  --color-hover-text: #3776A1;
+  --color-success: #10b981;
+}
+
+/* .dark @layer base {
+  :root {
+    --color-bg: #1f2937;
+    --color-text-default: #f3f4f6;
+  }
+} */
