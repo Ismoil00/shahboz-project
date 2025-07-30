@@ -21,7 +21,7 @@ function App() {
           path="/*"
           element={
             // <StatesStoreContextProvider>
-            // <ProtectedRoutes>
+            <ProtectedRoutes>
               <Routes>
                 <Route path="/" element={<Layout />}>
                   <Route index element={<Home />} />
@@ -32,7 +32,7 @@ function App() {
                 </Route>
                 <Route path="*" element={<div>Page not found</div>} />
               </Routes>
-            // </ProtectedRoutes>
+            </ProtectedRoutes>
             // </StatesStoreContextProvider>
           }
         />
