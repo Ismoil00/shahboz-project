@@ -1,3 +1,5 @@
+import type { MenuProps } from "antd";
+
 export interface ButtonTypes {
   text: string;
   onClick: () => void;
@@ -15,4 +17,9 @@ export interface InputType {
   error?: boolean;
   inputTailwindUtilities?: string | undefined;
   labelTailwindUtilities?: string | undefined;
+}
+
+export interface DropdownProps {
+  text: string;
+  items: MenuProps;
 }

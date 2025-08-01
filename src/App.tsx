@@ -7,6 +7,7 @@ import Login from "./pages/login";
 import Layout from "./layout";
 import { ToastContainer } from "react-toastify";
 import { Routes, Route } from "react-router-dom";
+import Settings from "./pages/settings";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -29,6 +30,7 @@ function App() {
                   <Route path="goods" element={<Goods />} />
                   <Route path="debts" element={<Debts />} />
                   <Route path="reports" element={<Reports />} />
+                  <Route path="settings" element={<Settings />} />
                 </Route>
                 <Route path="*" element={<div>Page not found</div>} />
               </Routes>

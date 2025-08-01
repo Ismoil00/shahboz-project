@@ -1,12 +1,10 @@
-import React, { useState, useContext, type JSX } from "react";
+import React, { useState, type JSX } from "react";
 import Button from "../../components/button";
 import Input from "../../components/input";
-import { Link } from "react-router-dom";
 import { ajv } from "../../components/validation";
 import type { AnyValidateFunction } from "ajv/dist/types";
 import Notify from "../../components/toast";
 import { useNavigate } from "react-router-dom";
-// import { sessionContext } from "../../helpers/sessionContext";
 import type { UserLoginData } from "./types";
 
 export default function Login(): JSX.Element {
@@ -16,15 +14,12 @@ export default function Login(): JSX.Element {
   });
   const [inputError, setInputError] = useState<string | undefined>(undefined);
   const navigate = useNavigate();
-  // const { sessionSocketConnection, newSessionRef } = useContext(sessionContext);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
     const value = event.target.value;
     setUser({ ...user, [name]: value });
   };
-
-  console.log("USER", user);
 
   const onSubmit = async () => {
     /* VALIDATION */
@@ -50,22 +45,19 @@ export default function Login(): JSX.Element {
             Accept: "application/json",
           },
           body: JSON.stringify(user),
-          credentials: "include",
+          // credentials: "include",
         }
       );
-      console.log("response", response);
       const data = await response.json();
-      console.log("data", data);
-
 
       /* HTTP ERROR HANDLE */
       if (response.status !== 200) throw data;
 
       /* SUCCESS -> NAVIGATE TO HOME-PAGE */
       // const token = response.headers.get("authorization");
-      // localStorage.setItem("session", JSON.stringify({ ...data, token }));
-      Notify(`Добро пожаловать ${data["fullname"]}`, "success");
-      // navigate("/");
+      localStorage.setItem("session", JSON.stringify({ ...data }));
+      Notify(`Добро пожаловать ${data["name"]}`, "success");
+      navigate("/");
     } catch (error: any) {
       Notify(error?.message || `LOGIN ERROR`, "error");
       console.error("LOGIN ERROR: ", error);
@@ -107,19 +99,6 @@ export default function Login(): JSX.Element {
       <div className="mt-10">
         <Button text="Войти" onClick={onSubmit} type="submit" />
       </div>
-      {/* <div className="mt-4 px-5 w-full flex justify-between flex-col items-center sm:flex-row">
-        <p className="text-brand_text_primary font-600">
-          Don't have an account yet?
-        </p>
-        <Link
-          to="/registration"
-          className="text-brand_blue hover:text-brand_blue_active"
-        >
-          <p className="text-brand_blue font-700 hover:text-brand_blue/80 active:text-brand_blue/70 transition-colors">
-            Sign up now
-          </p>
-        </Link>
-      </div> */}
     </form>
   );
 }
