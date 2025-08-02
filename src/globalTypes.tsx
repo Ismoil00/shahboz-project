@@ -10,4 +10,10 @@ export interface UserSession {
   role: string;
   access_token: string;
   refresh_token: string;
+  is_authenticated: boolean;
+}
+
+export interface GlobalStatesProps {
+  session: UserSession;
+  setSession: React.Dispatch<React.SetStateAction<UserSession>>;
 }

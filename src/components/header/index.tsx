@@ -1,11 +1,14 @@
-import type { UserSession } from "../../globalTypes";
+// import type { UserSession } from "../../globalTypes";
 import Dropdwn from "../dropdown";
 import { items } from "../../assets/headerItems";
+import { useContext } from "react";
+import { GlobalStates } from "../../globalStates";
 
 const Header = () => {
-  const session: UserSession = JSON.parse(
-    localStorage.getItem("session") as string
-  );
+  const { session } = useContext(GlobalStates);
+  // const session: UserSession = JSON.parse(
+  //   localStorage.getItem("session") as string
+  // );
   // console.log("SESSION", session);
 
   return (

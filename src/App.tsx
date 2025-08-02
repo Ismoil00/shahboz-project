@@ -8,38 +8,44 @@ import Layout from "./layout";
 import { ToastContainer } from "react-toastify";
 import { Routes, Route } from "react-router-dom";
 import Settings from "./pages/settings";
+import PublicRoutes from "./components/publicRoutes";
+import GlobalStatesProvider from "./globalStates";
 
 function App() {
-  // const [count, setCount] = useState(0);
-
   return (
     <div className="app font-body">
-      {/* <SessionContextProvider> */}
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        {/* <Route path="/registration" element={<Registration />} /> */}
-        <Route
-          path="/*"
-          element={
-            // <StatesStoreContextProvider>
-            <ProtectedRoutes>
-              <Routes>
-                <Route path="/" element={<Layout />}>
-                  <Route index element={<Home />} />
-                  <Route path="home" element={<Home />} />
-                  <Route path="goods" element={<Goods />} />
-                  <Route path="debts" element={<Debts />} />
-                  <Route path="reports" element={<Reports />} />
-                  <Route path="settings" element={<Settings />} />
-                </Route>
-                <Route path="*" element={<div>Page not found</div>} />
-              </Routes>
-            </ProtectedRoutes>
-            // </StatesStoreContextProvider>
-          }
-        />
-      </Routes>
-      {/* </SessionContextProvider> */}
+      <GlobalStatesProvider>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <PublicRoutes>
+                <Login />
+              </PublicRoutes>
+            }
+          />
+          <Route
+            path="/*"
+            element={
+              // <StatesStoreContextProvider>
+              <ProtectedRoutes>
+                <Routes>
+                  <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path="home" element={<Home />} />
+                    <Route path="goods" element={<Goods />} />
+                    <Route path="debts" element={<Debts />} />
+                    <Route path="reports" element={<Reports />} />
+                    <Route path="settings" element={<Settings />} />
+                  </Route>
+                  <Route path="*" element={<div>Page not found</div>} />
+                </Routes>
+              </ProtectedRoutes>
+              // </StatesStoreContextProvider>
+            }
+          />
+        </Routes>
+      </GlobalStatesProvider>
       <ToastContainer />
     </div>
   );
