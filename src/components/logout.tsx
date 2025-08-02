@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-// import type { UserSession } from "../globalTypes";
 import Notify from "./toast";
 import { useContext } from "react";
 import { GlobalStates } from "../globalStates";
@@ -7,12 +6,8 @@ import { GlobalStates } from "../globalStates";
 const Logout = () => {
   const { session } = useContext(GlobalStates);
   const navigate = useNavigate();
-  // const session: UserSession = JSON.parse(
-  //   localStorage.getItem("session") as string
-  // );
 
   const handleLogout = async () => {
-    console.log({ refresh: session.refresh_token });
     try {
       /* SERVER REQUEST */
       const response = await fetch(

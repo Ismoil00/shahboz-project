@@ -1,4 +1,3 @@
-// import type { UserSession } from "../../globalTypes";
 import Dropdwn from "../dropdown";
 import { items } from "../../assets/headerItems";
 import { useContext } from "react";
@@ -6,10 +5,6 @@ import { GlobalStates } from "../../globalStates";
 
 const Header = () => {
   const { session } = useContext(GlobalStates);
-  // const session: UserSession = JSON.parse(
-  //   localStorage.getItem("session") as string
-  // );
-  // console.log("SESSION", session);
 
   return (
     <div className="flex justify-end items-center gap-5 px-5 py-2 border-b-1 border-b-primary/10">

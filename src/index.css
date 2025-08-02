@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -8,9 +8,10 @@
   /* 🎨 Brand Colors */
   --color-primary: #1e40af;
   --color-secondary: #f97316;
-  --color-bg: #EEFDFF;
-  --color-default-text: #003A6B;
-  --color-hover-text: #305CDE;
+  --color-bg: #eefdff;
+  --color-gray-bg: #fafafa;
+  --color-default-text: #003a6b;
+  --color-hover-text: #305cde;
   /* --color-hover-text: #3776A1; */
   --color-success: #10b981;
 }
@@ -20,4 +21,18 @@
     --color-bg: #1f2937;
     --color-text-default: #f3f4f6;
   }
+} */
+
+.homePageTableHeader .ant-table-thead .ant-table-cell {
+  background-color: #0f4c81;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 1.5;
+}
+
+/* .ant-pagination-item-active,
+.ant-pagination-item-active a {
+  background-color: white !important;
+  border-color: #0050b3 !important;
+  color: #0050b3 !important;
 } */
