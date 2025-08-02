@@ -38,7 +38,7 @@ const Logout = () => {
 
   return (
     <button className="cursor-pointer" onClick={handleLogout}>
-      Logout
+      Выход
     </button>
   );
 };

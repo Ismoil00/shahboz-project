@@ -9,7 +9,7 @@ export const items: MenuProps["items"] = [
     key: "settings",
     label: (
       <Link to={"/settings"}>
-        <p className="text-default-text">Settings</p>
+        <p className="text-default-text">Настройки</p>
       </Link>
     ),
     icon: <IoMdSettings className="scale-200 text-default-text" />,
