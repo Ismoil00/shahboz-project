@@ -22,6 +22,8 @@ export const GlobalStates = createContext<GlobalStatesProps>({
 function GlobalStatesProvider({ children }: ReactChildren) {
   const [session, setSession] = useState<UserSession>(emptySession);
 
+  console.log("SESSION", session);
+
   return (
     <GlobalStates.Provider value={{ session, setSession }}>
       {children}

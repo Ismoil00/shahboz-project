@@ -5,7 +5,7 @@ function Settings() {
     <div>
       <Header />
       <h1 className="text-3xl font-bold text-default-text pt-10 pl-10">
-        Долги
+        Настройки
       </h1>
     </div>
   );

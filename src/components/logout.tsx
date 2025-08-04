@@ -8,6 +8,11 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
+    const formData = new FormData();
+    formData.append("refresh_token", session.refresh_token);
+
+    console.log("REFRESH TOKEN", session.refresh_token);
+
     try {
       /* SERVER REQUEST */
       const response = await fetch(
@@ -18,7 +23,8 @@ const Logout = () => {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          body: JSON.stringify({ refresh: session.refresh_token }),
+          // body: formData,
+          body: JSON.stringify({ refresh_token: session.refresh_token }),
         }
       );
       const data = await response.json();
