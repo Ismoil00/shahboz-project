@@ -19,27 +19,27 @@ function App() {
           <Route
             path="/login"
             element={
-              // <PublicRoutes>
-              <Login />
-              // </PublicRoutes>
+              <PublicRoutes>
+                <Login />
+              </PublicRoutes>
             }
           />
           <Route
             path="/*"
             element={
-              // <ProtectedRoutes>
-              <Routes>
-                <Route path="/" element={<Layout />}>
-                  <Route index element={<Home />} />
-                  <Route path="home" element={<Home />} />
-                  <Route path="goods" element={<Goods />} />
-                  <Route path="debts" element={<Debts />} />
-                  <Route path="reports" element={<Reports />} />
-                  <Route path="settings" element={<Settings />} />
-                </Route>
-                <Route path="*" element={<div>Page not found</div>} />
-              </Routes>
-              // </ProtectedRoutes>
+              <ProtectedRoutes>
+                <Routes>
+                  <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path="home" element={<Home />} />
+                    <Route path="goods" element={<Goods />} />
+                    <Route path="debts" element={<Debts />} />
+                    <Route path="reports" element={<Reports />} />
+                    <Route path="settings" element={<Settings />} />
+                  </Route>
+                  <Route path="*" element={<div>Page not found</div>} />
+                </Routes>
+              </ProtectedRoutes>
             }
           />
         </Routes>

@@ -6,5 +6,7 @@ import { GlobalStates } from "../globalStates";
 export default function PublicRoutes({ children }: ReactChildren) {
   const { session } = useContext(GlobalStates);
 
+  //  console.log("SESSION", session);
+
   return session.is_authenticated ? <Navigate to={"/"} /> : <>{children}</>;
 }

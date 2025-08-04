@@ -8,10 +8,11 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const formData = new FormData();
-    formData.append("refresh_token", session.refresh_token);
+    // const formData = new FormData();
+    // formData.append("refresh_token", session.refresh_token);
 
-    console.log("REFRESH TOKEN", session.refresh_token);
+    console.log("REFRESH TOKEN", session.access_token);
+    console.log("ACCESS TOKEN", session.refresh_token);
 
     try {
       /* SERVER REQUEST */
@@ -19,9 +20,11 @@ const Logout = () => {
         `${import.meta.env.VITE_SERVER_URL}/logout/`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
+            authorization: "bearer " + session.access_token,
           },
           // body: formData,
           body: JSON.stringify({ refresh_token: session.refresh_token }),
