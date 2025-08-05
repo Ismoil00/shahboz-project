@@ -11,8 +11,8 @@ const Logout = () => {
     // const formData = new FormData();
     // formData.append("refresh_token", session.refresh_token);
 
-    console.log("REFRESH TOKEN", session.access_token);
-    console.log("ACCESS TOKEN", session.refresh_token);
+    console.log("REFRESH TOKEN", session.refresh_token);
+    console.log("ACCESS TOKEN", "Bearer " + session.access_token);
 
     try {
       /* SERVER REQUEST */
@@ -24,7 +24,7 @@ const Logout = () => {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
-            authorization: "bearer " + session.access_token,
+            authorization: "Bearer " + session.access_token,
           },
           // body: formData,
           body: JSON.stringify({ refresh_token: session.refresh_token }),
