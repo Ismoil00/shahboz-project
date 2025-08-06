@@ -5,7 +5,7 @@ import type {
   GlobalStatesProps,
 } from "./globalTypes";
 
-const emptySession = {
+export const emptySession = {
   id: 0,
   name: "",
   role: "",

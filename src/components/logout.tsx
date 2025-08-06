@@ -2,17 +2,15 @@ import { useNavigate } from "react-router-dom";
 import Notify from "./toast";
 import { useContext } from "react";
 import { GlobalStates } from "../globalStates";
+import { emptySession } from "../globalStates";
 
 const Logout = () => {
-  const { session } = useContext(GlobalStates);
+  const { session, setSession } = useContext(GlobalStates);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    // const formData = new FormData();
-    // formData.append("refresh_token", session.refresh_token);
-
-    console.log("REFRESH TOKEN", session.refresh_token);
-    console.log("ACCESS TOKEN", "Bearer " + session.access_token);
+    const formData = new FormData();
+    formData.append("refresh_token", session.refresh_token);
 
     try {
       /* SERVER REQUEST */
@@ -30,14 +28,14 @@ const Logout = () => {
           body: JSON.stringify({ refresh_token: session.refresh_token }),
         }
       );
-      const data = await response.json();
 
       /* HTTP ERROR HANDLE */
-      if (response.status !== 200) throw data;
+      if (response.status !== 205) throw response;
 
       /* SUCCESS -> NAVIGATE TO HOME-PAGE */
       localStorage.removeItem("session");
-      Notify("You logged out", "info");
+      setSession(emptySession);
+      Notify("Вы вышли из системы", "info");
       navigate("/login");
     } catch (error: any) {
       Notify(error?.message || `LOGOUT ERROR`, "error");
