@@ -36,12 +36,14 @@ export default async function customServerRequest(
       }
     ); // 403, 401, 200, ...;
 
-    if (response.status === 200) {
+    console.log("RESPONSE", response);
+
+    if (Number(response.status.toString()[0]) === 2) {
       onlyOne = 1;
       return response;
     } else if (
       response.status === 401 &&
-      response.statusText === "TokenExpiredError" &&
+      // response.statusText === "Token is expired" &&
       onlyOne === 1
     ) {
       return await getNewAccessToken(
@@ -52,12 +54,14 @@ export default async function customServerRequest(
         headers,
         formdata
       );
-    } else if (
-      response.status === 403 &&
-      response.statusText === "RedirectToLoginPage"
-    ) {
-      redirectUserToLogin(response);
-    } else throw response;
+    }
+    // else if (
+    //   response.status === 403 &&
+    //   response.statusText === "RedirectToLoginPage"
+    // ) {
+    //   await redirectUserToLogin(response);
+    // }
+    else throw response;
   } catch (error) {
     onlyOne = 1;
     return error;
@@ -74,19 +78,20 @@ async function getNewAccessToken(
 ): Promise<any> {
   try {
     onlyOne++;
-    const response = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}/auth/refresh-token`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    ); // 403, 500, 200
-    if (response.status !== 200) throw response;
+    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/refresh`, {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify({ refresh: session["refresh_token"] }),
+    }); // 403, 500, 200
+    if (Number(response.status.toString()[0]) === 2) throw response;
 
-    const newAcessToken = response.headers.get("Authorization");
+    console.log("REFRESH TOKEN", response);
+
+    // const newAcessToken = response.headers.get("Authorization");
+    const data = await response.json();
     localStorage.setItem(
       "session",
-      JSON.stringify({ ...session, token: newAcessToken })
+      JSON.stringify({ ...session, access_token: data["access_token"] })
     );
 
     return await customServerRequest(endpoint, method, body, headers, formdata);
@@ -103,6 +108,7 @@ async function getNewAccessToken(
 
 async function redirectUserToLogin(res: Response) {
   const data = await res.json();
+
   Notify(data.msg, "error");
   localStorage.removeItem("session");
   setTimeout(() => {

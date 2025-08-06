@@ -4,9 +4,9 @@ import { useContext } from "react";
 import { GlobalStates } from "../globalStates";
 
 export default function ProtectedRoutes({ children }: ReactChildren) {
-  const { session } = useContext(GlobalStates);
+  const { getSession } = useContext(GlobalStates);
 
-  return session.is_authenticated ? (
+  return getSession().is_authenticated ? (
     <>{children}</>
   ) : (
     <Navigate to={"/login"} />

@@ -1,4 +1,4 @@
-import React, { useState, type JSX, useContext } from "react";
+import React, { useState, type JSX } from "react";
 import Button from "../../components/button";
 import Input from "../../components/input";
 import { ajv } from "../../components/validation";
@@ -6,7 +6,6 @@ import type { AnyValidateFunction } from "ajv/dist/types";
 import Notify from "../../components/toast";
 import { useNavigate } from "react-router-dom";
 import type { UserLoginData } from "./types";
-import { GlobalStates } from "../../globalStates";
 
 export default function Login(): JSX.Element {
   const [user, setUser] = useState<UserLoginData>({
@@ -14,7 +13,6 @@ export default function Login(): JSX.Element {
     password: "",
   });
   const [inputError, setInputError] = useState<string | undefined>(undefined);
-  const { setSession } = useContext(GlobalStates);
   const navigate = useNavigate();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +45,6 @@ export default function Login(): JSX.Element {
             Accept: "application/json",
           },
           body: JSON.stringify(user),
-          // credentials: "include",
         }
       );
       const data = await response.json();
@@ -56,9 +53,10 @@ export default function Login(): JSX.Element {
       if (response.status !== 200) throw data;
 
       /* SUCCESS -> NAVIGATE TO HOME-PAGE */
-      // const token = response.headers.get("authorization");
-      localStorage.setItem("session", JSON.stringify({ ...data }));
-      setSession({ ...data, is_authenticated: true });
+      localStorage.setItem(
+        "session",
+        JSON.stringify({ ...data, is_authenticated: true })
+      );
       Notify(`Добро пожаловать ${data["name"]}`, "success");
       navigate("/");
     } catch (error: any) {

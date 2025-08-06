@@ -14,6 +14,7 @@ export interface UserSession {
 }
 
 export interface GlobalStatesProps {
-  session: UserSession;
-  setSession: React.Dispatch<React.SetStateAction<UserSession>>;
+  // session: UserSession;
+  // setSession: React.Dispatch<React.SetStateAction<UserSession>>;
+  getSession(): UserSession;
 }

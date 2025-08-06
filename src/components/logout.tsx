@@ -2,16 +2,13 @@ import { useNavigate } from "react-router-dom";
 import Notify from "./toast";
 import { useContext } from "react";
 import { GlobalStates } from "../globalStates";
-import { emptySession } from "../globalStates";
 
 const Logout = () => {
-  const { session, setSession } = useContext(GlobalStates);
+  const { getSession } = useContext(GlobalStates);
   const navigate = useNavigate();
+  const session = getSession();
 
   const handleLogout = async () => {
-    const formData = new FormData();
-    formData.append("refresh_token", session.refresh_token);
-
     try {
       /* SERVER REQUEST */
       const response = await fetch(
@@ -24,7 +21,6 @@ const Logout = () => {
             Accept: "application/json",
             authorization: "Bearer " + session.access_token,
           },
-          // body: formData,
           body: JSON.stringify({ refresh_token: session.refresh_token }),
         }
       );
@@ -34,7 +30,6 @@ const Logout = () => {
 
       /* SUCCESS -> NAVIGATE TO HOME-PAGE */
       localStorage.removeItem("session");
-      setSession(emptySession);
       Notify("Вы вышли из системы", "info");
       navigate("/login");
     } catch (error: any) {

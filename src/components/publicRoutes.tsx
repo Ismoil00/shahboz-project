@@ -4,9 +4,11 @@ import { useContext } from "react";
 import { GlobalStates } from "../globalStates";
 
 export default function PublicRoutes({ children }: ReactChildren) {
-  const { session } = useContext(GlobalStates);
+  const { getSession } = useContext(GlobalStates);
 
-  //  console.log("SESSION", session);
-
-  return session.is_authenticated ? <Navigate to={"/"} /> : <>{children}</>;
+  return getSession().is_authenticated ? (
+    <Navigate to={"/"} />
+  ) : (
+    <>{children}</>
+  );
 }

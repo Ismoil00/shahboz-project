@@ -15,15 +15,21 @@ export const emptySession = {
 };
 
 export const GlobalStates = createContext<GlobalStatesProps>({
-  session: emptySession,
-  setSession: () => {},
+  // session: emptySession,
+  // setSession: () => {},
+  getSession: () => emptySession,
 });
 
 function GlobalStatesProvider({ children }: ReactChildren) {
-  const [session, setSession] = useState<UserSession>(emptySession);
+  // const [session, setSession] = useState<UserSession>(emptySession);
+
+  function getSession(): UserSession {
+    const _session: string | null = localStorage.getItem("session");
+    return !_session ? emptySession : JSON.parse(_session);
+  }
 
   return (
-    <GlobalStates.Provider value={{ session, setSession }}>
+    <GlobalStates.Provider value={{ getSession }}>
       {children}
     </GlobalStates.Provider>
   );
