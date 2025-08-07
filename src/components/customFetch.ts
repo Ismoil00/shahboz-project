@@ -23,7 +23,7 @@ export default async function customServerRequest(
         method,
         headers: {
           Accept: "application/json",
-          authorization: parsedSession["access_token"],
+          authorization: "Bearer " + parsedSession["access_token"],
           ...(method !== "GET" && !formdata
             ? { "Content-Type": "application/json" }
             : {}),
@@ -36,14 +36,14 @@ export default async function customServerRequest(
       }
     ); // 403, 401, 200, ...;
 
-    console.log("RESPONSE", response);
+    // console.log("CUSTOM FETCH RESPONSE", response);
 
     if (Number(response.status.toString()[0]) === 2) {
       onlyOne = 1;
       return response;
     } else if (
       response.status === 401 &&
-      // response.statusText === "Token is expired" &&
+      response.statusText === "Unauthorized" &&
       onlyOne === 1
     ) {
       return await getNewAccessToken(
@@ -78,26 +78,33 @@ async function getNewAccessToken(
 ): Promise<any> {
   try {
     onlyOne++;
-    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/refresh`, {
-      method: "POST",
-      credentials: "include",
-      body: JSON.stringify({ refresh: session["refresh_token"] }),
-    }); // 403, 500, 200
-    if (Number(response.status.toString()[0]) === 2) throw response;
+    const response = await fetch(
+      `${import.meta.env.VITE_SERVER_URL}/refresh/`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          authorization: "Bearer " + session["access_token"],
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ refresh: session["refresh_token"] }),
+      }
+    ); // 403, 500, 200
 
-    console.log("REFRESH TOKEN", response);
+    if (Number(response.status.toString()[0]) !== 2) throw response;
+    // console.log("REFRESH TOKEN RESPONSE", response);
 
-    // const newAcessToken = response.headers.get("Authorization");
     const data = await response.json();
     localStorage.setItem(
       "session",
-      JSON.stringify({ ...session, access_token: data["access_token"] })
+      JSON.stringify({ ...session, access_token: data["access"] })
     );
 
     return await customServerRequest(endpoint, method, body, headers, formdata);
   } catch (error: any) {
     onlyOne = 1;
-    if (error.status === 403 && error.statusText === "RedirectToLoginPage") {
+    if (error.status === 401 && error.statusText === "Unauthorized") {
       redirectUserToLogin(error);
       return;
     }

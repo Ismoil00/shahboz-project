@@ -26,7 +26,10 @@ const Logout = () => {
       );
 
       /* HTTP ERROR HANDLE */
-      if (response.status !== 205) throw response;
+      if (response.status === 401 && response.statusText === "Unauthorized") {
+        localStorage.removeItem("session");
+        navigate("/login");
+      } else if (Number(response.status.toString()[0]) !== 2) throw response;
 
       /* SUCCESS -> NAVIGATE TO HOME-PAGE */
       localStorage.removeItem("session");

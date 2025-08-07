@@ -1,5 +1,5 @@
 import Header from "../../components/header";
-import DebtsTable from "../../components/debtsTable";
+import DebtsTable from "./debtsTable";
 
 const Depts = () => {
   return (

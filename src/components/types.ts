@@ -26,10 +26,22 @@ export interface DropdownProps {
 
 export interface HomePageTableProps {
   key: string | number;
-  product_code: number;
-  product_name: string;
-  product_price: number;
-  product_affordable_quantity: number;
+  code: number;
+  name: string;
+  description: string;
+  price: number;
+  in_stock: number;
+  active?: boolean;
+}
+
+export interface HomePageReques {
+  id: number;
+  code: number;
+  name: string;
+  description: string;
+  price: number;
+  in_stock: number;
+  active?: boolean;
 }
 
 export interface DebtsPageTableProps {

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { HomePageTableProps } from "./components/types";
 
 export interface ReactChildren {
   children: ReactNode;
@@ -14,7 +15,7 @@ export interface UserSession {
 }
 
 export interface GlobalStatesProps {
-  // session: UserSession;
-  // setSession: React.Dispatch<React.SetStateAction<UserSession>>;
   getSession(): UserSession;
+  homePageTable: HomePageTableProps[];
+  setHomePageTable: React.Dispatch<React.SetStateAction<HomePageTableProps[]>>;
 }

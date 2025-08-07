@@ -4,6 +4,7 @@ import type {
   UserSession,
   GlobalStatesProps,
 } from "./globalTypes";
+import type { HomePageTableProps } from "./components/types";
 
 export const emptySession = {
   id: 0,
@@ -15,13 +16,13 @@ export const emptySession = {
 };
 
 export const GlobalStates = createContext<GlobalStatesProps>({
-  // session: emptySession,
-  // setSession: () => {},
   getSession: () => emptySession,
+  homePageTable: [],
+  setHomePageTable: () => {},
 });
 
 function GlobalStatesProvider({ children }: ReactChildren) {
-  // const [session, setSession] = useState<UserSession>(emptySession);
+  const [homePageTable, setHomePageTable] = useState<HomePageTableProps[]>([]);
 
   function getSession(): UserSession {
     const _session: string | null = localStorage.getItem("session");
@@ -29,7 +30,9 @@ function GlobalStatesProvider({ children }: ReactChildren) {
   }
 
   return (
-    <GlobalStates.Provider value={{ getSession }}>
+    <GlobalStates.Provider
+      value={{ getSession, homePageTable, setHomePageTable }}
+    >
       {children}
     </GlobalStates.Provider>
   );

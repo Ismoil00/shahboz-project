@@ -1,31 +1,37 @@
 import { Table } from "antd";
-import type { HomePageTableProps } from "./types";
-import { HomePageTableColumns } from "../assets/homePageTableColumns";
+import type { DebtsPageTableProps } from "../../components/types";
+import { DebtPageTableColumns } from "../../assets/debtsPageTableColumns";
 import { useEffect, useState } from "react";
-import Notify from "./toast";
+import Notify from "../../components/toast";
 
-function HomeTable() {
-  const [tableData, setTableData] = useState<HomePageTableProps[]>([
+function DebtsTable() {
+  const [tableData, setTableData] = useState<DebtsPageTableProps[]>([
     {
       key: 1,
-      product_code: 10,
-      product_name: "new product",
-      product_price: 10,
-      product_affordable_quantity: 10,
+      phone_number: 123456789,
+      customer_fullname: "testov test testovich",
+      purchased_products: ["shampoo", "soap", "condum"],
+      purchased_date: "01-01-2025",
+      total_price: 500,
+      left_price: 255,
     },
     {
       key: 2,
-      product_code: 10,
-      product_name: "new product",
-      product_price: 10,
-      product_affordable_quantity: 10,
+      phone_number: 123456789,
+      customer_fullname: "testov test testovich",
+      purchased_products: ["shampoo", "soap", "condum"],
+      purchased_date: "01-01-2025",
+      total_price: 500,
+      left_price: 255,
     },
     {
       key: 3,
-      product_code: 10,
-      product_name: "new product",
-      product_price: 10,
-      product_affordable_quantity: 10,
+      phone_number: 123456789,
+      customer_fullname: "testov test testovich",
+      purchased_products: ["shampoo", "soap", "condum"],
+      purchased_date: "01-01-2025",
+      total_price: 500,
+      left_price: 255,
     },
   ]);
 
@@ -62,8 +68,8 @@ function HomeTable() {
 
   return (
     <div className="w-full px-10 pt-10">
-      <Table<HomePageTableProps>
-        columns={HomePageTableColumns}
+      <Table<DebtsPageTableProps>
+        columns={DebtPageTableColumns}
         dataSource={tableData}
         className="homePageTableHeader"
         onRow={() => ({
@@ -77,4 +83,4 @@ function HomeTable() {
   );
 }
 
-export default HomeTable;
+export default DebtsTable;
