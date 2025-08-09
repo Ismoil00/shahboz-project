@@ -36,3 +36,7 @@
   border-color: #0050b3 !important;
   color: #0050b3 !important;
 } */
+
+.ant-spin-dot-item {
+  background-color: #1e40af !important;
+}

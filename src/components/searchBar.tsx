@@ -1,19 +1,14 @@
 import Input from "../components/input";
 import { IoClose } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
-
-interface SearchBarCompProps {
-  searchedText: string;
-  setSearchedText: React.Dispatch<React.SetStateAction<string>>;
-  handleSearch: () => Promise<void>;
-  placeholder?: string;
-}
+import type { SearchBarCompProps } from "./types";
 
 export default function SearchBar({
   searchedText,
   setSearchedText,
   handleSearch,
   placeholder,
+  onKeyDown,
 }: SearchBarCompProps) {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchedText(event.target.value);
@@ -32,9 +27,10 @@ export default function SearchBar({
         type="text"
         value={searchedText}
         inputTailwindUtilities="bg-brand_white focus:ring-transparent focus:shadow-lg !text-brand_text_primary pl-[3rem] pr-[2.2rem] peer/searchBar"
+        onKeyDown={onKeyDown}
       />
       <IoClose
-        onClick={(e) => setSearchedText("")}
+        onClick={() => setSearchedText("")}
         className={`text-primary size-7 absolute top-0 right-0 translate-y-[45%] -translate-x-2 cursor-pointer hover:text-primary transition duration-200 peer-focus/searchBar:block ${
           searchedText !== "" ? "block" : "hidden"
         }`}

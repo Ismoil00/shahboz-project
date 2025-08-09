@@ -1,7 +1,7 @@
 import { Table } from "antd";
 import type {
   HomePageTableProps,
-  HomePageReques,
+  ProductProps,
 } from "../../components/types";
 import { HomePageTableColumns } from "../../assets/homePageTableColumns";
 import { useEffect } from "react";
@@ -10,12 +10,18 @@ import customServerRequest from "../../components/customFetch";
 import { useContext } from "react";
 import { GlobalStates } from "../../globalStates";
 
-function HomeTable() {
+interface HomeTableProps {
+  setLoader: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function HomeTable({ setLoader }: HomeTableProps) {
   const { homePageTable, setHomePageTable } = useContext(GlobalStates);
 
   useEffect(() => {
     const fetchTableData = async () => {
       try {
+        setLoader(true);
+
         /* SERVER REQUEST */
         const response = await customServerRequest("products");
 
@@ -24,7 +30,7 @@ function HomeTable() {
 
         const data = await response.json();
         setHomePageTable(
-          data.map((el: HomePageReques) => ({ ...el, key: el.id }))
+          data.map((el: ProductProps) => ({ ...el, key: el.id }))
         );
 
         /* SUCCESS */
@@ -32,6 +38,8 @@ function HomeTable() {
       } catch (error: any) {
         Notify(error?.message || `HOME PAGE TABLE DATA FETCH ERROR`, "error");
         console.error("HOME PAGE TABLE DATA FETCH ERROR: ", error);
+      } finally {
+        setLoader(false);
       }
     };
 

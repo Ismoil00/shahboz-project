@@ -17,6 +17,15 @@ export interface InputType {
   error?: boolean;
   inputTailwindUtilities?: string | undefined;
   labelTailwindUtilities?: string | undefined;
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement> | undefined;
+}
+
+export interface SearchBarCompProps {
+  searchedText: string;
+  setSearchedText: React.Dispatch<React.SetStateAction<string>>;
+  handleSearch: () => Promise<void>;
+  placeholder?: string;
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement> | undefined;
 }
 
 export interface DropdownProps {
@@ -34,7 +43,7 @@ export interface HomePageTableProps {
   active?: boolean;
 }
 
-export interface HomePageReques {
+export interface ProductProps {
   id: number;
   code: number;
   name: string;

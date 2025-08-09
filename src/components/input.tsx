@@ -10,6 +10,7 @@ export default function Input({
   error = false,
   inputTailwindUtilities,
   labelTailwindUtilities,
+  onKeyDown
 }: InputType) {
   return (
     <>
@@ -30,6 +31,7 @@ export default function Input({
         className={`input w-full px-5 py-3 mt-1 rounded-3xl bg-bg text-hover-text tracking-wide focus:outline-none transition duration-100 focus:ring-1 placeholder-hover-text/30 ${
           error ? "ring-1 ring-red-600" : "focus:ring-hover-text/50"
         } ${inputTailwindUtilities}`}
+        onKeyDown={onKeyDown}
       />
     </>
   );
