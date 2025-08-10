@@ -1,8 +1,5 @@
 import { Table } from "antd";
-import type {
-  HomePageTableProps,
-  ProductProps,
-} from "../../components/types";
+import type { HomePageTableProps, ProductProps } from "../../components/types";
 import { HomePageTableColumns } from "../../assets/homePageTableColumns";
 import { useEffect } from "react";
 import Notify from "../../components/toast";

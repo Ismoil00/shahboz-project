@@ -14,7 +14,7 @@ const Header = () => {
         alt="Image Profile"
         className="w-10 h-10 rounded-full"
       />
-      <Dropdwn text={session.name} items={{ items }} />
+      <Dropdwn text={session.name} items={items} />
     </div>
   );
 };

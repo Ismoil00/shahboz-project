@@ -30,7 +30,11 @@ export interface SearchBarCompProps {
 
 export interface DropdownProps {
   text: string;
-  items: MenuProps;
+  items: MenuProps["items"];
+  dropdownTailwindcss?: string;
+  getChosenDropdownElement?: (key: string) => void;
+  multiSelection?: boolean;
+  defaultValue?: string;
 }
 
 export interface HomePageTableProps {
@@ -51,6 +55,19 @@ export interface ProductProps {
   price: number;
   in_stock: number;
   active?: boolean;
+}
+
+export interface PurchaseProductProps {
+  id: number;
+  code: number;
+  name: string;
+  description: string;
+  price: number;
+  in_stock: number;
+  active?: boolean;
+  purchase_quantity: number;
+  purchase_type: string;
+  in_debt: boolean;
 }
 
 export interface DebtsPageTableProps {

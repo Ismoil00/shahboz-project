@@ -40,3 +40,90 @@
 .ant-spin-dot-item {
   background-color: #1e40af !important;
 }
+
+/* products page chosen-products modal footer */
+.chosen-product-modal.ant-modal-wrap {
+  display: grid;
+  place-content: center;
+}
+
+/* products page chosen-products modal footer */
+.chosen-product-modal .ant-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* products page chosen-products modal footer left button */
+.chosen-product-modal .ant-modal-footer {
+  border-top: 1px solid rgb(0, 58, 107, 0.2);
+  padding-top: 20px;
+  margin-top: 0;
+}
+.chosen-product-modal .ant-modal-footer > button:first-child {
+  background-color: #f97316;
+  color: white;
+}
+.chosen-product-modal .ant-modal-footer > button:first-child:hover {
+  color: #f97316;
+  border-color: #f97316;
+  background-color: white;
+}
+
+/* products page chosen-products modal footer right button */
+.chosen-product-modal .ant-modal-footer > button:last-child {
+  background-color: #1e40af;
+  color: white;
+}
+.chosen-product-modal .ant-modal-footer > button:last-child:hover {
+  color: #1e40af;
+  border-color: #1e40af;
+  background-color: white;
+}
+
+/* products page chosen-products modal content x-button */
+.more-details-modal .ant-modal-content .ant-modal-close-x svg,
+.chosen-product-modal .ant-modal-content .ant-modal-close-x svg {
+  fill: #1e40af;
+  scale: 1.2;
+}
+.more-details-modal .ant-modal-content .ant-modal-close,
+.chosen-product-modal .ant-modal-content .ant-modal-close {
+  transition: scale 0.2s;
+}
+.more-details-modal .ant-modal-content .ant-modal-close:hover,
+.chosen-product-modal .ant-modal-content .ant-modal-close:hover {
+  scale: 1.1;
+}
+
+/* products page chosen-products modal header title */
+.more-details-modal .ant-modal-header .ant-modal-title,
+.chosen-product-modal .ant-modal-header .ant-modal-title {
+  color: #0f4c81;
+  border-bottom: 1px solid rgb(0, 58, 107, 0.2);
+  padding-bottom: 20px;
+  font-size: 20px;
+}
+
+/* products page chosen-products modal width */
+.chosen-product-modal > div {
+  width: 80vw !important;
+}
+
+/* custom checkbox totol design */
+.custom-checkbox {
+  padding: 0 !important;
+}
+/* .custom-checkbox svg {
+  fill: #003a6b !important;
+} */
+
+/* input number styles */
+.ant-input-number:hover,
+.ant-input-number-focused {
+  border-color: #1e40af !important;
+}
+.ant-input-number-focused {
+  box-shadow: 0 0 0 5 #1e40af !important;
+}

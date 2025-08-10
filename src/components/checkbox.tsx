@@ -22,6 +22,7 @@ export default function CustomCheckbox({
         disabled={disabled}
         checked={checked}
         onChange={onChange}
+        className="custom-checkbox"
       />
     </div>
   );
