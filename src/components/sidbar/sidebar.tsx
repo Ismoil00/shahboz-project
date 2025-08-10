@@ -7,7 +7,8 @@ import { GlobalStates } from "../../globalStates";
 
 export default function SidebarListItems({ version }: { version: string }) {
   const [active, setActive] = useState<string>("home");
-  const { session } = useContext(GlobalStates);
+  const { getSession } = useContext(GlobalStates);
+  const session = getSession();
 
   return (
     <ul
@@ -24,8 +25,7 @@ export default function SidebarListItems({ version }: { version: string }) {
       </Link>
       {renderSidebar().map(
         (menu: SidebarMenuItem) =>
-          // menu.for_role.includes(session.role) && 
-        (
+          menu.for_role.includes(session.role) && (
             <li
               key={menu.id}
               className="group/li"

@@ -33,16 +33,16 @@ const ProductComponent = ({
   };
 
   return (
-    <section className="w-80 h-fit flex flex-col bg-gray-bg rounded-2xl shadow-lg relative z-0">
+    <section className="w-60 h-fit flex flex-col bg-gray-bg rounded-lg shadow-2xl relative z-0 border-primary/5 border-[0.5px]">
       {isChosen && (
         <div
-          className={`cover absolute top-0 bottom-0 right-0 left-0 bg-white opacity-50 rounded-2xl z-10`}
+          className={`cover absolute top-0 bottom-0 right-0 left-0 bg-white opacity-70 rounded-2xl z-10`}
         ></div>
       )}
       <img
         src="public/product-icon.png"
         alt="product image"
-        className="w-full object-cover rounded-t-2xl"
+        className="w-full h-52 object-cover rounded-t-2xl"
       />
       <div className="texts pl-3 py-3 flex flex-col gap-2 text-default-text">
         <p>
@@ -66,7 +66,11 @@ const ProductComponent = ({
       <Button
         text={`${isChosen ? "Убрать" : "Добавить"}`}
         onClick={() => handleProductToPurchase(product)}
-        tailwindUtilities="rounded-2xl! bg-secondary! hover:bg-secondary/70! duration-200 transition cursor-pointer z-20!"
+        tailwindUtilities={`rounded-2xl! py-2! duration-200 transition cursor-pointer z-20! ${
+          isChosen
+            ? "bg-secondary! hover:bg-secondary/70!"
+            : "bg-default-text hover:bg-hover-text"
+        }`}
       />
     </section>
   );

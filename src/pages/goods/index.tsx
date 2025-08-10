@@ -1,43 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../components/header";
 import SearchBar from "../../components/searchBar";
 import Spinner from "../../components/spinner";
 import customServerRequest from "../../components/customFetch";
 import Notify from "../../components/toast";
 import type {
+  HomePageTableProps,
   ProductProps,
   PurchaseProductProps,
 } from "../../components/types";
 import MoreDetailsModal from "./moreDetailsModal";
 import ProductComponent from "./productComponent";
-import { MdPayment } from "react-icons/md";
-import { MdOutlineCleaningServices } from "react-icons/md";
 import ChosenProductsModal from "./chosenProductsModal";
+import ChosenProductsBtns from "./chosenProductsBtns";
+import { useContext } from "react";
+import { GlobalStates } from "../../globalStates";
 
 const Goods = () => {
   const [searchedText, setSearchedText] = useState("");
   const [loader, setLoader] = useState(false);
-  const [products, setProducts] = useState<ProductProps[]>([
-    {
-      id: 134343434,
-      code: 10000,
-      name: "Блокнот А5",
-      description: "Качественный канцелярский товар.",
-      price: 454.68,
-      in_stock: 8,
-      active: true,
-    },
-    {
-      id: 2234234234,
-      code: 2233,
-      name: "iPhone 13 Pro Max",
-      description:
-        "this is new iPhone that has recently released and has the best features that none other has besides it.",
-      price: 1200,
-      in_stock: 80,
-      active: true,
-    },
-  ]);
+  /* existing + searched products */
+  const [products, setProducts] = useState<ProductProps[]>([]);
+  const { homePageTable } = useContext(GlobalStates);
   /* chosen products to buy states */
   const [chosenProducts, setChosenProducts] = useState<PurchaseProductProps[]>(
     []
@@ -49,7 +33,17 @@ const Goods = () => {
     {} as ProductProps
   );
 
-  // console.log("chosenproducts", chosenProducts);
+  /* we display the home-page-products on this page */
+  useEffect(() => {
+    if (homePageTable.length === 0) return;
+
+    setProducts(
+      homePageTable.map((p: HomePageTableProps) => ({
+        ...p,
+        id: +p.key,
+      }))
+    );
+  }, []);
 
   /* finding searched term */
   const handleSearch = async () => {
@@ -64,7 +58,7 @@ const Goods = () => {
 
       const data = await response.json();
 
-      setProducts((p) => [...p, { ...data }]);
+      setProducts([{ ...data }]);
 
       /* SUCCESS */
       Notify("Поиск Данных Успешно Сделано", "success");
@@ -105,41 +99,37 @@ const Goods = () => {
               searchedText={searchedText}
               setSearchedText={setSearchedText}
               handleSearch={handleSearch}
-              placeholder="Ищите Товар (можете нажать ENTER для поиска)"
+              placeholder="Поиск Товара (можете нажать ENTER для поиска)"
               onKeyDown={handleKeyDown}
             />
           </div>
 
-          <article className="flex gap-x-10 gap-y-10 flex-wrap p-10">
-            {products.map((product: ProductProps) => (
-              <ProductComponent
-                key={product.id}
-                product={product}
-                isChosen={chosenProducts.some(
-                  (el: ProductProps) => el.id === product.id
-                )}
-                setChosenProducts={setChosenProducts}
-                setMoreDetailsModal={setMoreDetailsModal}
-                setMoreDetailsProduct={setMoreDetailsProduct}
-              />
-            ))}
-          </article>
+          {products.length > 0 ? (
+            <article className="flex gap-x-10 gap-y-10 flex-wrap p-10">
+              {products.map((product: ProductProps) => (
+                <ProductComponent
+                  key={product.id}
+                  product={product}
+                  isChosen={chosenProducts.some(
+                    (el: ProductProps) => el.id === product.id
+                  )}
+                  setChosenProducts={setChosenProducts}
+                  setMoreDetailsModal={setMoreDetailsModal}
+                  setMoreDetailsProduct={setMoreDetailsProduct}
+                />
+              ))}
+            </article>
+          ) : (
+            <div className="w-full grid place-content-center text-3xl font-bold text-red-500 pt-10 pl-10">
+              Нету товаров, делайте поиск
+            </div>
+          )}
 
           {chosenProducts.length > 0 && (
-            <article className="w-full fixed bottom-[100px] flex gap-5 items-center justify-center">
-              <button
-                className="bg-secondary text-white rounded-xl shadow-xl shadow-black/50 w-[140px] h-fit py-2 cursor-pointer hover:bg-secondary/75 duration-200 transition my-auto flex gap-2 justify-center items-center"
-                onClick={cleanChosenProducts}
-              >
-                <MdOutlineCleaningServices size={25} /> Очистить
-              </button>
-              <button
-                className="bg-primary text-white rounded-xl shadow-xl shadow-black/50 w-[140px] h-fit py-2 cursor-pointer hover:bg-hover-text duration-200 transition my-auto flex gap-2 justify-center items-center"
-                onClick={() => setChosenProductsModal(true)}
-              >
-                <MdPayment size={25} /> Покупать
-              </button>
-            </article>
+            <ChosenProductsBtns
+              cleanChosenProducts={cleanChosenProducts}
+              setChosenProductsModal={setChosenProductsModal}
+            />
           )}
 
           {chosenProductsModal && (

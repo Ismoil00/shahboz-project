@@ -42,10 +42,10 @@
 }
 
 /* products page chosen-products modal footer */
-.chosen-product-modal.ant-modal-wrap {
+/* .chosen-product-modal.ant-modal-wrap {
   display: grid;
   place-content: center;
-}
+} */
 
 /* products page chosen-products modal footer */
 .chosen-product-modal .ant-modal-footer {
