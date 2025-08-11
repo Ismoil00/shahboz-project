@@ -4,6 +4,7 @@ import { AiFillProduct } from "react-icons/ai";
 import { FcDebt } from "react-icons/fc";
 import { TbReportSearch } from "react-icons/tb";
 import { FcSalesPerformance } from "react-icons/fc";
+import { GiCalculator } from "react-icons/gi";
 
 export interface SidebarMenuItem {
   id: string;
@@ -43,12 +44,19 @@ export const renderSidebar = (): SidebarMenuItem[] => {
       for_role: ["user", "admin"],
       icon: <FcDebt className="scale-150" />,
     },
+    // {
+    //   id: "reports",
+    //   title: "Отчеты",
+    //   path: "/reports",
+    //   for_role: ["admin"],
+    //   icon: <TbReportSearch className="scale-150" />,
+    // },
     {
-      id: "reports",
-      title: "Отчеты",
-      path: "/reports",
+      id: "calculator",
+      title: "Калькулятор",
+      path: "/calculator",
       for_role: ["admin"],
-      icon: <TbReportSearch className="scale-150" />,
+      icon: <GiCalculator className="scale-150" />,
     },
   ];
 };

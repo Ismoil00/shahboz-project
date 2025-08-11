@@ -3,6 +3,7 @@ import Home from "./pages/home";
 import Goods from "./pages/goods";
 import Sales from "./pages/sales";
 import Debts from "./pages/debts";
+import Calculator from "./pages/calculator";
 import Reports from "./pages/reports";
 import Login from "./pages/login";
 import Layout from "./layout";
@@ -37,6 +38,7 @@ function App() {
                     <Route path="sales" element={<Sales />} />
                     <Route path="debts" element={<Debts />} />
                     <Route path="reports" element={<Reports />} />
+                    <Route path="calculator" element={<Calculator />} />
                     <Route path="settings" element={<Settings />} />
                   </Route>
                   <Route path="*" element={<div>Page not found</div>} />
