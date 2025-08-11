@@ -5,21 +5,23 @@ import Dropdwn from "../../components/dropdown";
 import { items } from "../../assets/purchaseTypes";
 import CustomCheckbox from "../../components/checkbox";
 import InputNum from "../../components/inputNumber";
+import Input from "../../components/input";
 
 const ChosenProductsModal = ({
   chosenProducts,
   setChosenProducts,
   chosenProductsModal,
   setChosenProductsModal,
+  handlePurchaseSave,
 }: ChosenProductsModalProps) => {
   const handleFieldChange = (
-    id: number,
-    field: "purchase_type" | "purchase_quantity" | "in_debt",
+    _product: number,
+    field: "payment_type" | "quantity" | "not_paid" | "client_name",
     value: string | boolean | number
   ) => {
     setChosenProducts(
       chosenProducts.map((p: PurchaseProductProps) =>
-        p.id === id
+        p.product === _product
           ? {
               ...p,
               [field]: value,
@@ -34,7 +36,10 @@ const ChosenProductsModal = ({
       title="Выбранные Товары"
       closable={{ "aria-label": "Custom Close Button" }}
       open={chosenProductsModal}
-      onOk={() => setChosenProductsModal(false)}
+      onOk={async () => {
+        await handlePurchaseSave();
+        setChosenProductsModal(false);
+      }}
       onCancel={() => setChosenProductsModal(false)}
       cancelText="Закрыть"
       okText="Сделать Покупку"
@@ -43,7 +48,7 @@ const ChosenProductsModal = ({
       <article className="py-5">
         {chosenProducts.map((product: PurchaseProductProps, index: number) => (
           <section
-            key={product.id}
+            key={product.product}
             className={`flex justify-between items-center ${
               chosenProducts.length - 1 !== index &&
               "border-b-default-text/10 border-b-[1px]"
@@ -61,19 +66,9 @@ const ChosenProductsModal = ({
               </p>
             </div>
             <div className="flex flex-col gap-y-0.5 flex-2 min-w-[100px]">
-              <p className="text-default-text/70 font-normal">Код товара:</p>{" "}
-              <p className="text-default-text font-semibold">{product.code}</p>
-            </div>
-            <div className="flex flex-col gap-y-0.5 flex-2 min-w-[100px]">
               <p className="text-default-text/70 font-normal">Название:</p>{" "}
               <p className="text-default-text font-semibold">{product.name}</p>
             </div>
-            {/* <div className="flex flex-col gap-y-0.5 flex-3 min-w-[100px] px-2">
-              <p className="text-default-text/70 font-normal">Описание:</p>{" "}
-              <p className="text-default-text font-semibold">
-                {product.description}
-              </p>
-            </div> */}
             <div className="flex flex-col gap-y-0.5 flex-2 min-w-[100px]">
               <p className="text-default-text/70 font-normal">
                 Доступное количество:
@@ -88,21 +83,25 @@ const ChosenProductsModal = ({
                 items={items}
                 dropdownTailwindcss="text-default-text/70! font-normal!"
                 getChosenDropdownElement={(type: string) =>
-                  handleFieldChange(product.id, "purchase_type", type)
+                  handleFieldChange(product.product, "payment_type", type)
                 }
                 multiSelection={false}
-                defaultValue={product.purchase_type}
+                defaultValue={product.payment_type}
               />
               <p className="text-default-text font-semibold">
-                {product.purchase_type === "cash" ? "Наличный" : "Безналичный"}
+                {product.payment_type === "cash" ? "Наличный" : "Безналичный"}
               </p>
             </div>
             <div className="flex flex-col gap-y-0.5 flex-1 min-w-[100px]">
               <p className="text-default-text/70 font-normal">В долг:</p>
               <CustomCheckbox
-                checked={product.in_debt}
+                checked={product.not_paid}
                 onChange={(e) =>
-                  handleFieldChange(product.id, "in_debt", e.target.checked)
+                  handleFieldChange(
+                    product.product,
+                    "not_paid",
+                    e.target.checked
+                  )
                 }
               />
             </div>
@@ -110,12 +109,31 @@ const ChosenProductsModal = ({
               <p className="text-default-text/70 font-normal">Количество:</p>{" "}
               <InputNum
                 min={1}
-                value={product.purchase_quantity}
+                value={product.quantity}
                 onChange={(value: number) =>
-                  handleFieldChange(product.id, "purchase_quantity", value)
+                  handleFieldChange(product.product, "quantity", value)
                 }
               />
             </div>
+            {product.not_paid && (
+              <div className="flex flex-col gap-y-0.5 flex-2 min-w-[100px]">
+                <p className="text-default-text/70 font-normal">ФИО Клиента:</p>{" "}
+                <Input
+                  name="ФИО Клиента"
+                  onChange={(e) =>
+                    handleFieldChange(
+                      product.product,
+                      "client_name",
+                      e.target.value
+                    )
+                  }
+                  placeholder="ФИО Клиента"
+                  type="text"
+                  value={product.client_name}
+                  inputTailwindUtilities="bg-white! px-2! py-1! rounded-sm! border-black/10! border-[0.5px] text-default-text! focus:ring-primary! -mt-0.5!"
+                />
+              </div>
+            )}
           </section>
         ))}
       </article>

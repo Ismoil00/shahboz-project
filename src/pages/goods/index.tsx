@@ -45,6 +45,74 @@ const Goods = () => {
     );
   }, []);
 
+  /* 
+[
+{
+  "user": 1,
+  "client_name": "Alice Smith",
+  "client_number": 987654,
+  "product": 4,
+  "quantity": 2,
+  "not_paid": false,
+  "payment_type": "cash"
+},
+{
+  "user": 1,
+  "client_name": "Alice Smith",
+  "client_number": 987654,
+  "product": 21,
+  "quantity": 1,
+  "not_paid": true,
+  "payment_type": "cash"
+}
+
+name: string;
+price: number;
+in_stock: number;
+
+  product: number;
+  quantity: number;
+  payment_type: string;
+  not_paid: boolean;
+  user?: number;
+  client_number?: number;
+  client_name?: string;
+]
+*/
+
+  /* handling chosen products purchase */
+  const handlePurchaseSave = async () => {
+    const filteredData = chosenProducts.map((product: PurchaseProductProps) => {
+      const { name, price, in_stock, ...rest } = product;
+      return rest;
+    });
+
+    try {
+      setLoader(true);
+
+      /* SERVER REQUEST */
+      const response = await customServerRequest(`purchase/create/`, "POST", {
+        filteredData,
+      });
+
+      /* HTTP ERROR HANDLE */
+      if (response.status !== 200) throw response;
+
+      console.log("RESPONSE", response);
+      const data = await response.json();
+      console.log("DATA", data);
+
+      /* SUCCESS */
+      Notify("Покупка Успешно Сделана", "success");
+      setChosenProducts([]);
+    } catch (error: any) {
+      Notify("PRODUCTS PURCHASE ERROR", "error");
+      console.error("PRODUCTS PURCHASE ERROR: ", error);
+    } finally {
+      setLoader(false);
+    }
+  };
+
   /* finding searched term */
   const handleSearch = async () => {
     try {
@@ -111,7 +179,7 @@ const Goods = () => {
                   key={product.id}
                   product={product}
                   isChosen={chosenProducts.some(
-                    (el: ProductProps) => el.id === product.id
+                    (el: PurchaseProductProps) => el.product === product.id
                   )}
                   setChosenProducts={setChosenProducts}
                   setMoreDetailsModal={setMoreDetailsModal}
@@ -138,6 +206,7 @@ const Goods = () => {
               setChosenProducts={setChosenProducts}
               chosenProductsModal={chosenProductsModal}
               setChosenProductsModal={setChosenProductsModal}
+              handlePurchaseSave={handlePurchaseSave}
             />
           )}
 

@@ -24,4 +24,5 @@ export interface ChosenProductsModalProps {
   setChosenProducts: React.Dispatch<React.SetStateAction<PurchaseProductProps[]>>;
   chosenProductsModal: boolean;
   setChosenProductsModal: React.Dispatch<React.SetStateAction<boolean>>;
+  handlePurchaseSave: () => Promise<void>
 }

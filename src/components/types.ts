@@ -58,16 +58,16 @@ export interface ProductProps {
 }
 
 export interface PurchaseProductProps {
-  id: number;
-  code: number;
+  product: number;
   name: string;
-  description: string;
   price: number;
   in_stock: number;
-  active?: boolean;
-  purchase_quantity: number;
-  purchase_type: string;
-  in_debt: boolean;
+  quantity: number;
+  payment_type: string;
+  not_paid: boolean;
+  user?: number;
+  client_number?: number;
+  client_name?: string;
 }
 
 export interface DebtsPageTableProps {

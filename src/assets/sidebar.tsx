@@ -3,6 +3,7 @@ import { GoHomeFill } from "react-icons/go";
 import { AiFillProduct } from "react-icons/ai";
 import { FcDebt } from "react-icons/fc";
 import { TbReportSearch } from "react-icons/tb";
+import { FcSalesPerformance } from "react-icons/fc";
 
 export interface SidebarMenuItem {
   id: string;
@@ -27,6 +28,13 @@ export const renderSidebar = (): SidebarMenuItem[] => {
       path: "/goods",
       for_role: ["user", "admin"],
       icon: <AiFillProduct className="scale-150" />,
+    },
+    {
+      id: "sales",
+      title: "Продажи",
+      path: "/sales",
+      for_role: ["user", "admin"],
+      icon: <FcSalesPerformance className="scale-150" />,
     },
     {
       id: "debts",

@@ -1,6 +1,7 @@
 import ProtectedRoutes from "./components/protectedRoutes";
 import Home from "./pages/home";
 import Goods from "./pages/goods";
+import Sales from "./pages/sales";
 import Debts from "./pages/debts";
 import Reports from "./pages/reports";
 import Login from "./pages/login";
@@ -33,6 +34,7 @@ function App() {
                     <Route index element={<Home />} />
                     <Route path="home" element={<Home />} />
                     <Route path="goods" element={<Goods />} />
+                    <Route path="sales" element={<Sales />} />
                     <Route path="debts" element={<Debts />} />
                     <Route path="reports" element={<Reports />} />
                     <Route path="settings" element={<Settings />} />

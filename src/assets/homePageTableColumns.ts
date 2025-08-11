@@ -12,11 +12,11 @@ export const HomePageTableColumns: TableProps<HomePageTableProps>["columns"] = [
     dataIndex: "name",
     title: "Название",
   },
-  {
-    key: "description",
-    dataIndex: "description",
-    title: "Описание",
-  },
+  // {
+  //   key: "description",
+  //   dataIndex: "description",
+  //   title: "Описание",
+  // },
   {
     key: "price",
     dataIndex: "price",

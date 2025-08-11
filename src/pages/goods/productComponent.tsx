@@ -4,6 +4,8 @@ import type {
   ProductProps,
   PurchaseProductProps,
 } from "../../components/types";
+import { GlobalStates } from "../../globalStates";
+import { useContext } from "react";
 
 const ProductComponent = ({
   product,
@@ -12,21 +14,34 @@ const ProductComponent = ({
   setMoreDetailsModal,
   setMoreDetailsProduct,
 }: ProductComponentProps) => {
+  const { getSession } = useContext(GlobalStates);
+  const session = getSession();
+
   const handleProductToPurchase = (_product: ProductProps) => {
     setChosenProducts((p: PurchaseProductProps[]) => {
       const exists = p.some(
-        (el: PurchaseProductProps) => el.id === _product.id
+        (el: PurchaseProductProps) => el.product === _product.id
       );
 
       return exists
-        ? [...p.filter((el: PurchaseProductProps) => el.id !== _product.id)]
+        ? [
+            ...p.filter(
+              (el: PurchaseProductProps) => el.product !== _product.id
+            ),
+          ]
         : [
             ...p,
             {
-              ..._product,
-              purchase_type: "cash",
-              purchase_quantity: 1,
-              in_debt: false,
+              product: _product.id,
+              payment_type: "cash",
+              quantity: 1,
+              name: _product.name,
+              price: _product.price,
+              in_stock: _product.in_stock,
+              not_paid: false,
+              user: session.id,
+              client_number: Number(new Date()),
+              client_name: "",
             },
           ];
     });

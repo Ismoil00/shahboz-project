@@ -10,7 +10,7 @@ export const items: MenuProps["items"] = [
     extra: "Наличный",
   },
   {
-    key: "card",
+    key: "non-cash",
     label: <p className="text-default-text pl-1">Безналичный</p>,
     icon: <CiCreditCard1 className="scale-200 text-default-text" />,
     extra: "Безналичный",
