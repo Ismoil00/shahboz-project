@@ -16,7 +16,12 @@ const ChosenProductsModal = ({
 }: ChosenProductsModalProps) => {
   const handleFieldChange = (
     _product: number,
-    field: "payment_type" | "quantity" | "not_paid" | "client_name",
+    field:
+      | "payment_type"
+      | "quantity"
+      | "not_paid"
+      | "client_name"
+      | "client_number",
     value: string | boolean | number
   ) => {
     setChosenProducts(
@@ -44,6 +49,7 @@ const ChosenProductsModal = ({
       cancelText="Закрыть"
       okText="Сделать Покупку"
       wrapClassName="chosen-product-modal"
+      style={{ top: 20 }}
     >
       <article className="py-5">
         {chosenProducts.map((product: PurchaseProductProps, index: number) => (
@@ -59,7 +65,7 @@ const ChosenProductsModal = ({
               alt="product image"
               className="w-[100px] h-[100px] object-cover rounded-full"
             />
-            <div className="flex flex-col gap-y-0.5 flex-2 min-w-[100px] pl-2">
+            <div className="flex flex-col gap-y-0.5 flex-1 min-w-[100px] pl-2">
               <p className="text-default-text/70 font-normal">Цена:</p>{" "}
               <p className="text-default-text font-semibold">
                 {product.price} c.
@@ -105,7 +111,7 @@ const ChosenProductsModal = ({
                 }
               />
             </div>
-            <div className="flex flex-col gap-y-0.5 flex-2 min-w-[100px]">
+            <div className="flex flex-col gap-y-0.5 flex-1 min-w-[100px]">
               <p className="text-default-text/70 font-normal">Количество:</p>{" "}
               <InputNum
                 min={1}
@@ -116,7 +122,7 @@ const ChosenProductsModal = ({
               />
             </div>
             {product.not_paid && (
-              <div className="flex flex-col gap-y-0.5 flex-2 min-w-[100px]">
+              <div className="flex flex-col gap-y-0.5 flex-2 min-w-[100px] pr-1">
                 <p className="text-default-text/70 font-normal">ФИО Клиента:</p>{" "}
                 <Input
                   name="ФИО Клиента"
@@ -130,6 +136,27 @@ const ChosenProductsModal = ({
                   placeholder="ФИО Клиента"
                   type="text"
                   value={product.client_name}
+                  inputTailwindUtilities="bg-white! px-2! py-1! rounded-sm! border-black/10! border-[0.5px] text-default-text! focus:ring-primary! -mt-0.5!"
+                />
+              </div>
+            )}
+            {product.not_paid && (
+              <div className="flex flex-col gap-y-0.5 flex-2 min-w-[100px]">
+                <p className="text-default-text/70 font-normal">
+                  Телефон Клиента:
+                </p>{" "}
+                <Input
+                  name="Телефон Клиента"
+                  onChange={(e) =>
+                    handleFieldChange(
+                      product.product,
+                      "client_number",
+                      Number(e.target.value)
+                    )
+                  }
+                  placeholder="Телефон Клиента"
+                  type="number"
+                  value={product.client_number}
                   inputTailwindUtilities="bg-white! px-2! py-1! rounded-sm! border-black/10! border-[0.5px] text-default-text! focus:ring-primary! -mt-0.5!"
                 />
               </div>

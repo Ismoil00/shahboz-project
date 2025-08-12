@@ -26,3 +26,13 @@ export interface ChosenProductsModalProps {
   setChosenProductsModal: React.Dispatch<React.SetStateAction<boolean>>;
   handlePurchaseSave: () => Promise<void>
 }
+
+export interface PurchaseSuccessInfoProps {
+  total_purchase: number;
+}
+
+export interface SuccessPurchaseModalProps {
+  purchaseSuccessModal: boolean;
+  purchaseSuccessInfo: PurchaseSuccessInfoProps;
+  setPurchaseSuccessModal: React.Dispatch<React.SetStateAction<boolean>>;
+}

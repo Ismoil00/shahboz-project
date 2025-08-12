@@ -13,6 +13,7 @@ const MoreDetailsModal = ({
       onCancel={() => setMoreDetailsModal(false)}
       wrapClassName="more-details-modal"
       footer={false}
+      style={{ top: 20 }}
     >
       <img
         src="public/product-icon.png"

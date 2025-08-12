@@ -108,7 +108,7 @@
 
 /* products page chosen-products modal width */
 .chosen-product-modal > div {
-  width: 80vw !important;
+  width: 90vw !important;
 }
 
 /* custom checkbox totol design */
@@ -126,4 +126,11 @@
 }
 .ant-input-number-focused {
   box-shadow: 0 0 0 5 #1e40af !important;
+}
+
+
+.successful-purchase .ant-modal-header .ant-modal-title {
+  text-align: center;
+  font-size: 24px;
+  color: green;
 }

@@ -40,7 +40,7 @@ const ProductComponent = ({
               in_stock: _product.in_stock,
               not_paid: false,
               user: session.id,
-              client_number: Number(new Date()),
+              client_number: 0,
               client_name: "",
             },
           ];
@@ -59,7 +59,7 @@ const ProductComponent = ({
         alt="product image"
         className="w-full h-52 object-cover rounded-t-2xl"
       />
-      <div className="texts pl-3 py-3 flex flex-col gap-2 text-default-text">
+      <div className="texts pl-3 py-3 flex flex-col text-default-text">
         <p>
           <span className="text-default-text/70">Код товара:</span>{" "}
           <span className="text-secondary font-medium">{product.code}</span>
@@ -69,7 +69,7 @@ const ProductComponent = ({
           <span className="text-secondary font-medium">{product.in_stock}</span>
         </p>
         <p
-          className="text-hover-text cursor-pointer transition duration-200 hover:text-hover-text/70 underline"
+          className="text-hover-text text-sm italic mt-2 cursor-pointer transition duration-200 hover:text-hover-text/70 underline"
           onClick={() => {
             setMoreDetailsProduct({ ...product });
             setMoreDetailsModal(true);

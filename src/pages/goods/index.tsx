@@ -15,13 +15,15 @@ import ChosenProductsModal from "./chosenProductsModal";
 import ChosenProductsBtns from "./chosenProductsBtns";
 import { useContext } from "react";
 import { GlobalStates } from "../../globalStates";
+import type { PurchaseSuccessInfoProps } from "./types";
+import SuccessPurchaseModal from "./successPurchaseModal";
 
 const Goods = () => {
   const [searchedText, setSearchedText] = useState("");
   const [loader, setLoader] = useState(false);
   /* existing + searched products */
   const [products, setProducts] = useState<ProductProps[]>([]);
-  const { homePageTable } = useContext(GlobalStates);
+  const { homePageTable, setHomePageTable } = useContext(GlobalStates);
   /* chosen products to buy states */
   const [chosenProducts, setChosenProducts] = useState<PurchaseProductProps[]>(
     []
@@ -32,6 +34,10 @@ const Goods = () => {
   const [moreDetailsProduct, setMoreDetailsProduct] = useState<ProductProps>(
     {} as ProductProps
   );
+  /* we inform user about successful purchase */
+  const [purchaseSuccessModal, setPurchaseSuccessModal] = useState(false);
+  const [purchaseSuccessInfo, setPurchaseSuccessInfo] =
+    useState<PurchaseSuccessInfoProps>({ total_purchase: 0 });
 
   /* we display the home-page-products on this page */
   useEffect(() => {
@@ -45,41 +51,6 @@ const Goods = () => {
     );
   }, []);
 
-  /* 
-[
-{
-  "user": 1,
-  "client_name": "Alice Smith",
-  "client_number": 987654,
-  "product": 4,
-  "quantity": 2,
-  "not_paid": false,
-  "payment_type": "cash"
-},
-{
-  "user": 1,
-  "client_name": "Alice Smith",
-  "client_number": 987654,
-  "product": 21,
-  "quantity": 1,
-  "not_paid": true,
-  "payment_type": "cash"
-}
-
-name: string;
-price: number;
-in_stock: number;
-
-  product: number;
-  quantity: number;
-  payment_type: string;
-  not_paid: boolean;
-  user?: number;
-  client_number?: number;
-  client_name?: string;
-]
-*/
-
   /* handling chosen products purchase */
   const handlePurchaseSave = async () => {
     const filteredData = chosenProducts.map((product: PurchaseProductProps) => {
@@ -89,22 +60,25 @@ in_stock: number;
 
     try {
       setLoader(true);
-
       /* SERVER REQUEST */
-      const response = await customServerRequest(`purchase/create/`, "POST", {
-        filteredData,
-      });
+      const response = await customServerRequest(
+        `purchase/create/`,
+        "POST",
+        filteredData
+      );
 
       /* HTTP ERROR HANDLE */
-      if (response.status !== 200) throw response;
+      if (response.status !== 201) throw response;
 
-      console.log("RESPONSE", response);
       const data = await response.json();
-      console.log("DATA", data);
+      // console.log("DATA", data);
 
       /* SUCCESS */
       Notify("Покупка Успешно Сделана", "success");
       setChosenProducts([]);
+      setProducts([]);
+      setPurchaseSuccessInfo({ total_purchase: data.total_purchase });
+      setPurchaseSuccessModal(true);
     } catch (error: any) {
       Notify("PRODUCTS PURCHASE ERROR", "error");
       console.error("PRODUCTS PURCHASE ERROR: ", error);
@@ -119,14 +93,16 @@ in_stock: number;
       setLoader(true);
 
       /* SERVER REQUEST */
-      const response = await customServerRequest(`products/${searchedText}`);
+      const response = await customServerRequest(
+        `products/?search=${searchedText}`
+      );
 
       /* HTTP ERROR HANDLE */
       if (response.status !== 200) throw response;
 
       const data = await response.json();
 
-      setProducts([{ ...data }]);
+      setProducts([...data.results]);
 
       /* SUCCESS */
       Notify("Поиск Данных Успешно Сделано", "success");
@@ -167,7 +143,7 @@ in_stock: number;
               searchedText={searchedText}
               setSearchedText={setSearchedText}
               handleSearch={handleSearch}
-              placeholder="Поиск Товара (можете нажать ENTER для поиска)"
+              placeholder="Поиск по имени и коду товара (нажмите ENTER)"
               onKeyDown={handleKeyDown}
             />
           </div>
@@ -215,6 +191,14 @@ in_stock: number;
               moreDetailsProduct={moreDetailsProduct}
               moreDetailsModal={moreDetailsModal}
               setMoreDetailsModal={setMoreDetailsModal}
+            />
+          )}
+
+          {purchaseSuccessModal && (
+            <SuccessPurchaseModal
+              purchaseSuccessModal={purchaseSuccessModal}
+              purchaseSuccessInfo={purchaseSuccessInfo}
+              setPurchaseSuccessModal={setPurchaseSuccessModal}
             />
           )}
         </>

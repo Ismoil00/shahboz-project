@@ -13,6 +13,8 @@ export default async function customServerRequest(
   try {
     const session: string | null = localStorage.getItem("session");
 
+    console.log("BODY", body)
+
     if (!session) throw new Error("Session not found");
     const parsedSession: UserSession = JSON.parse(session);
 
