@@ -23,7 +23,7 @@ const Goods = () => {
   const [loader, setLoader] = useState(false);
   /* existing + searched products */
   const [products, setProducts] = useState<ProductProps[]>([]);
-  const { homePageTable, setHomePageTable } = useContext(GlobalStates);
+  const { homePageTable } = useContext(GlobalStates);
   /* chosen products to buy states */
   const [chosenProducts, setChosenProducts] = useState<PurchaseProductProps[]>(
     []
