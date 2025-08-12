@@ -36,8 +36,6 @@ export default async function customServerRequest(
       }
     ); // 403, 401, 200, ...;
 
-    // console.log("CUSTOM FETCH RESPONSE", response);
-
     if (Number(response.status.toString()[0]) === 2) {
       onlyOne = 1;
       return response;
@@ -93,7 +91,7 @@ async function getNewAccessToken(
     ); // 403, 500, 200
 
     if (Number(response.status.toString()[0]) !== 2) throw response;
-    // console.log("REFRESH TOKEN RESPONSE", response);
+    console.log("REFRESH TOKEN RESPONSE", response);
 
     const data = await response.json();
     localStorage.setItem(
