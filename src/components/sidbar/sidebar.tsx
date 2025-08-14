@@ -12,7 +12,7 @@ export default function SidebarListItems({ version }: { version: string }) {
 
   return (
     <ul
-      className={`w-full flex flex-col gap-14 items-center ${
+      className={`w-full flex flex-col gap-8 items-center ${
         version === "mobile" ? "" : "pt-10 h-full"
       }`}
     >

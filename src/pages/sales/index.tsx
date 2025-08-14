@@ -103,8 +103,8 @@ function Sales() {
 
         const data = await response.json();
 
-        console.log("response", response);
-        console.log("DATA", data);
+        // console.log("response", response);
+        // console.log("DATA", data);
 
         /* SUCCESS */
         Notify("Данные Успешно Получены", "success");
@@ -119,7 +119,7 @@ function Sales() {
     // if (purchases.length === 0) fetchTableData();
   }, []);
   return (
-    <div>
+    <div className="pl-[150px]">
       {loader ? (
         <Spinner />
       ) : (

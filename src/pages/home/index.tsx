@@ -43,7 +43,7 @@ const Home = () => {
   }, [page]);
 
   return (
-    <div>
+    <div className="pl-[150px]">
       {loader ? (
         <Spinner />
       ) : (

@@ -10,7 +10,7 @@ export default function Sidebar() {
   return (
     <>
       {/* LAPTOP + PC VERSIONS */}
-      <div className="hidden sm:block w-44 bg-bg min-h-screen">
+      <div className="hidden sm:block w-[150px] bg-bg min-h-screen fixed top-0 left-0 z-10">
         <SidebarListItems version="desktop" />
       </div>
 

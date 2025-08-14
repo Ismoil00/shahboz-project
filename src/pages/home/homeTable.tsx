@@ -5,12 +5,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { GlobalStates } from "../../globalStates";
 import MoreDetailsModal from "../goods/moreDetailsModal";
-
-interface HomeTableProps {
-  totalCount: number;
-  page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-}
+import type { HomeTableProps } from "./types";
 
 function HomeTable({ totalCount, page, setPage }: HomeTableProps) {
   const { homePageTable } = useContext(GlobalStates);

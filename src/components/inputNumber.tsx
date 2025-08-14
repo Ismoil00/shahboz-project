@@ -1,9 +1,4 @@
-// import type { InputNumberProps } from "antd";
 import { InputNumber } from "antd";
-
-// const onChange: InputNumberProps["onChange"] = (value) => {
-//   console.log("changed", value);
-// };
 
 interface InputNumberProps {
   min: number;

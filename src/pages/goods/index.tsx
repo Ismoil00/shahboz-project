@@ -71,7 +71,6 @@ const Goods = () => {
       if (response.status !== 201) throw response;
 
       const data = await response.json();
-      // console.log("DATA", data);
 
       /* SUCCESS */
       Notify("Покупка Успешно Сделана", "success");
@@ -127,7 +126,7 @@ const Goods = () => {
   const cleanChosenProducts = () => setChosenProducts([]);
 
   return (
-    <div className="relative">
+    <div className="relative pl-[150px]">
       {loader ? (
         <Spinner />
       ) : (

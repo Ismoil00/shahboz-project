@@ -91,7 +91,6 @@ async function getNewAccessToken(
     ); // 403, 500, 200
 
     if (Number(response.status.toString()[0]) !== 2) throw response;
-    console.log("REFRESH TOKEN RESPONSE", response);
 
     const data = await response.json();
     localStorage.setItem(

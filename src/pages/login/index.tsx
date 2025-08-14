@@ -6,6 +6,7 @@ import type { AnyValidateFunction } from "ajv/dist/types";
 import Notify from "../../components/toast";
 import { useNavigate } from "react-router-dom";
 import type { UserLoginData } from "./types";
+import Spinner from "../../components/spinner";
 
 export default function Login(): JSX.Element {
   const [user, setUser] = useState<UserLoginData>({
@@ -13,6 +14,7 @@ export default function Login(): JSX.Element {
     password: "",
   });
   const [inputError, setInputError] = useState<string | undefined>(undefined);
+  const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +37,7 @@ export default function Login(): JSX.Element {
     }
 
     try {
+      setLoader(true);
       /* SERVER REQUEST */
       const response = await fetch(
         `${import.meta.env.VITE_SERVER_URL}/login/`,
@@ -64,42 +67,49 @@ export default function Login(): JSX.Element {
       console.error("LOGIN ERROR: ", error);
     } finally {
       if (inputError) setInputError(undefined);
+      setLoader(false);
     }
   };
 
   return (
-    <form
-      className="registration-page px-5 sm:px-0 pb-24 sm:w-[500px] m-auto translate-y-[40%]"
-      onSubmit={(e: React.FormEvent) => e.preventDefault()}
-    >
-      <h1 className="w-full text-center mb-10 text-default-text text-3xl font-bold">
-        Ваш Финансовый Менеджер
-      </h1>
-      <div className="mt-5">
-        <Input
-          type="text"
-          name="username"
-          onChange={onChange}
-          value={user.username}
-          label="Имя пользователя"
-          placeholder="username2025"
-          error={inputError === "username" ? true : false}
-        />
-      </div>
-      <div className="mt-5">
-        <Input
-          type="password"
-          name="password"
-          onChange={onChange}
-          value={user.password}
-          label="Пароль"
-          placeholder="adf44!@$@#"
-          error={inputError === "password" ? true : false}
-        />
-      </div>
-      <div className="mt-10">
-        <Button text="Войти" onClick={onSubmit} type="submit" />
-      </div>
-    </form>
+    <div>
+      {loader ? (
+        <Spinner />
+      ) : (
+        <form
+          className="registration-page px-5 sm:px-0 pb-24 sm:w-[500px] m-auto translate-y-[40%]"
+          onSubmit={(e: React.FormEvent) => e.preventDefault()}
+        >
+          <h1 className="w-full text-center mb-10 text-default-text text-3xl font-bold">
+            Ваш Финансовый Менеджер
+          </h1>
+          <div className="mt-5">
+            <Input
+              type="text"
+              name="username"
+              onChange={onChange}
+              value={user.username}
+              label="Имя пользователя"
+              placeholder="username2025"
+              error={inputError === "username" ? true : false}
+            />
+          </div>
+          <div className="mt-5">
+            <Input
+              type="password"
+              name="password"
+              onChange={onChange}
+              value={user.password}
+              label="Пароль"
+              placeholder="adf44!@$@#"
+              error={inputError === "password" ? true : false}
+            />
+          </div>
+          <div className="mt-10">
+            <Button text="Войти" onClick={onSubmit} type="submit" />
+          </div>
+        </form>
+      )}
+    </div>
   );
 }
