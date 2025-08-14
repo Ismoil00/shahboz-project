@@ -4,23 +4,23 @@ import type { DebtsPageTableProps } from "../components/types";
 export const DebtPageTableColumns: TableProps<DebtsPageTableProps>["columns"] =
   [
     {
-      key: "phone_number",
-      dataIndex: "phone_number",
+      key: "client_number",
+      dataIndex: "client_number",
       title: "Номер Телефона",
     },
     {
-      key: "customer_fullname",
-      dataIndex: "customer_fullname",
+      key: "client_name",
+      dataIndex: "client_name",
       title: "ФИО Покупателя",
     },
     {
-      key: "purchased_products",
-      dataIndex: "purchased_products",
+      key: "product",
+      dataIndex: "product",
       title: "Продукты",
     },
     {
-      key: "purchased_date",
-      dataIndex: "purchased_date",
+      key: "sold_at",
+      dataIndex: "sold_at",
       title: "Дата Покупки",
     },
     {
@@ -29,8 +29,20 @@ export const DebtPageTableColumns: TableProps<DebtsPageTableProps>["columns"] =
       title: "Полная Сумма",
     },
     {
-      key: "left_price",
-      dataIndex: "left_price",
+      key: "remaining_debt",
+      dataIndex: "remaining_debt",
       title: "Оставшаяся Сумма",
+    },
+    {
+      key: "actions",
+      title: "Выплатить долг",
+      render: (text, record) => (
+        <button
+          className="cursor-pointer"
+          onClick={() => console.log("Clicked", record)}
+        >
+          Оплатить
+        </button>
+      ),
     },
   ];

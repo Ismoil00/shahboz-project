@@ -72,10 +72,16 @@ export interface PurchaseProductProps {
 
 export interface DebtsPageTableProps {
   key: string | number;
-  phone_number: number;
-  customer_fullname: string;
-  purchased_products: string[];
-  purchased_date: string;
+  id: number;
+  client_number: number;
+  client_name: string;
+  product: string;
+  sold_at: string;
   total_price: number;
-  left_price: number;
+  remaining_debt: number;
+  
+  quantity?: number;
+  not_paid?: boolean;
+  payment_type?: string;
+  paid_amount?: number;
 }
