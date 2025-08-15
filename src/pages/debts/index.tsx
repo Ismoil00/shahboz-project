@@ -7,6 +7,7 @@ import type { DebtsPageTableProps } from "../../components/types";
 import Spinner from "../../components/spinner";
 import type { PayDebtProps } from "./types";
 import DebtsPayModal from "./debtsPayModal";
+import SearchBar from "../../components/searchBar";
 
 const initialPayDebt = {
   purchase_id: 0,
@@ -21,6 +22,7 @@ const Depts = () => {
   const [paidRefresh, setPaidRefresh] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(1);
+  const [searchedText, setSearchedText] = useState("");
 
   /* DEBTS FETCH */
   useEffect(() => {
@@ -79,6 +81,42 @@ const Depts = () => {
     setPayDebt((p) => ({ ...p, [key]: value }));
   };
 
+  /* finding items based on searched keywords */
+  const handleSearch = async () => {
+    try {
+      setLoader(true);
+
+      /* SERVER REQUEST */
+      const response = await customServerRequest(
+        `debtors/?search=${searchedText}/`
+      );
+
+      /* HTTP ERROR HANDLE */
+      if (Number(response.status.toString()[0]) !== 2) throw response;
+
+      const data = await response.json();
+
+      console.log("DATA", data);
+
+      /* SUCCESS */
+      Notify("Поиск Данных Успешно Сделано", "success");
+    } catch (error: any) {
+      const errMsg: string =
+        error?.statusText === "Not Found" && error?.status === 404
+          ? "Запись не найдена"
+          : "SEARCHED PRODUCTS FETCH ERROR";
+      Notify(errMsg, "error");
+      console.error("SEARCHED PRODUCTS FETCH ERROR: ", error);
+    } finally {
+      setLoader(false);
+    }
+  };
+
+  /* Enter press */
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") handleSearch();
+  };
+
   return (
     <div className="pl-[150px]">
       {loader ? (
@@ -89,6 +127,17 @@ const Depts = () => {
           <h1 className="text-3xl font-bold text-default-text pt-10 pl-10">
             Долги
           </h1>
+
+          <div className="mt-4 ml-10 mr-20">
+            <SearchBar
+              searchedText={searchedText}
+              setSearchedText={setSearchedText}
+              handleSearch={handleSearch}
+              placeholder="Поиск по имени и телефону клиента (нажмите ENTER)"
+              onKeyDown={handleKeyDown}
+            />
+          </div>
+
           <DebtsTable
             tableData={tableData}
             handlePayBtnClick={(record: DebtsPageTableProps) => {
@@ -108,25 +157,6 @@ const Depts = () => {
               setDebtAmountModal={setDebtAmountModal}
               handlePayDebtChange={handlePayDebtChange}
             />
-            // <Modal
-            //   title="Введите сумму платежа"
-            //   open={debtAmountModal}
-            //   onCancel={() => setDebtAmountModal(false)}
-            //   wrapClassName="more-details-modal"
-            //   footer={
-            //     <Button text="Оплатить" onClick={handlePayClick}></Button>
-            //   }
-            // >
-            //   <Input
-            //     name="amount"
-            //     onChange={(e) =>
-            //       handlePayDebtChange("amount", Number(e.target.value))
-            //     }
-            //     placeholder="сумма платижа"
-            //     type="number"
-            //     value={payDebt.amount}
-            //   />
-            // </Modal>
           )}
         </>
       )}

@@ -58,6 +58,25 @@ const Goods = () => {
       return rest;
     });
 
+    /* VALIDATION START */
+    if (
+      filteredData.some(
+        (el) =>
+          el.not_paid &&
+          (el.client_name === "" ||
+            !el.client_name ||
+            el.client_number === 0 ||
+            !el.client_number)
+      )
+    ) {
+      Notify(
+        "Если в ДОЛГ, то необходимо указать ИМЯ и НОМЕР-ТЕЛЕФОНА КЛИЕНТА",
+        "error"
+      );
+      return;
+    }
+    /* VALIDATION END */
+
     try {
       setLoader(true);
       /* SERVER REQUEST */
@@ -68,7 +87,7 @@ const Goods = () => {
       );
 
       /* HTTP ERROR HANDLE */
-      if (response.status !== 201) throw response;
+      if (Number(response.status.toString()[0]) !== 2) throw response;
 
       const data = await response.json();
 
@@ -78,6 +97,7 @@ const Goods = () => {
       setProducts([]);
       setPurchaseSuccessInfo({ total_purchase: data.total_purchase });
       setPurchaseSuccessModal(true);
+      setChosenProductsModal(false);
     } catch (error: any) {
       Notify("PRODUCTS PURCHASE ERROR", "error");
       console.error("PRODUCTS PURCHASE ERROR: ", error);
@@ -97,20 +117,17 @@ const Goods = () => {
       );
 
       /* HTTP ERROR HANDLE */
-      if (response.status !== 200) throw response;
+      if (Number(response.status.toString()[0]) !== 2) throw response;
 
       const data = await response.json();
-
-      setProducts([...data.results]);
+      if (data.results.length === 0 && data.count === 0)
+        throw new Error("Запись не найдено");
 
       /* SUCCESS */
+      setProducts([...data.results]);
       Notify("Поиск Данных Успешно Сделано", "success");
     } catch (error: any) {
-      const errMsg: string =
-        error?.statusText === "Not Found" && error?.status === 404
-          ? "Запись не найдена"
-          : "SEARCHED PRODUCTS FETCH ERROR";
-      Notify(errMsg, "error");
+      Notify(error?.message || "SEARCHED PRODUCTS FETCH ERROR", "error");
       console.error("SEARCHED PRODUCTS FETCH ERROR: ", error);
     } finally {
       setLoader(false);

@@ -20,7 +20,7 @@ const Home = () => {
         const response = await customServerRequest(`products/?page=${page}`);
 
         /* HTTP ERROR HANDLE */
-        if (response.status !== 200) throw response;
+        if (Number(response.status.toString()[0]) !== 2) throw response;
 
         const data = await response.json();
         setTotalCount(data.count);

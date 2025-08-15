@@ -43,7 +43,7 @@ const ChosenProductsModal = ({
       open={chosenProductsModal}
       onOk={async () => {
         await handlePurchaseSave();
-        setChosenProductsModal(false);
+        // setChosenProductsModal(false);
       }}
       onCancel={() => setChosenProductsModal(false)}
       cancelText="Закрыть"
