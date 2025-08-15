@@ -33,10 +33,13 @@ const Depts = () => {
         const response = await customServerRequest(`debtors/?page=${page}`);
 
         /* HTTP ERROR HANDLE */
-        if (response.status !== 200) throw response;
+        if (Number(response.status.toString()[0]) !== 2) throw response;
+
+        const data = await response.json();
+        if (data.results.length === 0 && data.count === 0)
+          throw new Error("Запись не найдено");
 
         /* SUCCESS */
-        const data = await response.json();
         setTotalCount(data.count);
         setTableData(
           data.results.map((el: DebtsPageTableProps) => ({ ...el, key: el.id }))
@@ -44,6 +47,7 @@ const Depts = () => {
         Notify("Долги Успешно Получены", "success");
       } catch (error: any) {
         Notify("DEBTS FETCH ERROR", "error");
+        setTableData([]);
         console.error("DEBTS FETCH ERROR: ", error);
       } finally {
         setLoader(false);
@@ -88,24 +92,25 @@ const Depts = () => {
 
       /* SERVER REQUEST */
       const response = await customServerRequest(
-        `debtors/?search=${searchedText}/`
+        `debtors/?search=${searchedText}&page=${page}`
       );
 
       /* HTTP ERROR HANDLE */
       if (Number(response.status.toString()[0]) !== 2) throw response;
 
       const data = await response.json();
-
-      console.log("DATA", data);
+      if (data.results.length === 0 && data.count === 0)
+        throw new Error("Запись не найдено");
 
       /* SUCCESS */
+      setTotalCount(data.count);
+      setTableData(
+        data.results.map((el: DebtsPageTableProps) => ({ ...el, key: el.id }))
+      );
       Notify("Поиск Данных Успешно Сделано", "success");
     } catch (error: any) {
-      const errMsg: string =
-        error?.statusText === "Not Found" && error?.status === 404
-          ? "Запись не найдена"
-          : "SEARCHED PRODUCTS FETCH ERROR";
-      Notify(errMsg, "error");
+      Notify(error?.message || "SEARCHED PRODUCTS FETCH ERROR", "error");
+      setTableData([]);
       console.error("SEARCHED PRODUCTS FETCH ERROR: ", error);
     } finally {
       setLoader(false);
