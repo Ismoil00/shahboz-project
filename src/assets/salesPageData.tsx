@@ -14,6 +14,7 @@ export const SalesTableColumns: TableProps<SalesProps>["columns"] = [
     key: "product_name",
     dataIndex: "product_name",
     title: "Название",
+    sorter: (a, b) => a.product_name.localeCompare(b.product_name),
   },
   {
     key: "total_quantity",
@@ -25,6 +26,7 @@ export const SalesTableColumns: TableProps<SalesProps>["columns"] = [
     key: "seller",
     dataIndex: "seller",
     title: "Продавец",
+    sorter: (a, b) => a.seller.localeCompare(b.seller),
   },
   {
     key: "total_price",
@@ -36,6 +38,11 @@ export const SalesTableColumns: TableProps<SalesProps>["columns"] = [
     key: "sold",
     dataIndex: "sold",
     title: "Проданно",
+    sorter: (a, b) => {
+      const dateA = new Date(a.sold).getTime();
+      const dateB = new Date(b.sold).getTime();
+      return dateA - dateB;
+    },
   },
 ];
 

@@ -19,16 +19,23 @@ export const GetDebtPageTableColumns = (
     key: "client_name",
     dataIndex: "client_name",
     title: "ФИО Покупателя",
+    sorter: (a, b) => a.client_name.localeCompare(b.client_name),
   },
   {
     key: "product",
     dataIndex: "product",
     title: "Продукты",
+    sorter: (a, b) => a.product.localeCompare(b.product),
   },
   {
     key: "sold_at",
     dataIndex: "sold_at",
     title: "Дата Покупки",
+    sorter: (a, b) => {
+      const dateA = new Date(a.sold_at).getTime();
+      const dateB = new Date(b.sold_at).getTime();
+      return dateA - dateB;
+    },
   },
   {
     key: "total_price",
@@ -40,6 +47,7 @@ export const GetDebtPageTableColumns = (
     key: "remaining_debt",
     dataIndex: "remaining_debt",
     title: "Оставшаяся Сумма",
+    sorter: (a, b) => a.remaining_debt - b.remaining_debt,
   },
   {
     key: "actions",
