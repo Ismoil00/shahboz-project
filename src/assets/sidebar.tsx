@@ -48,14 +48,14 @@ export const renderSidebar = (): SidebarMenuItem[] => {
     //   id: "reports",
     //   title: "Отчеты",
     //   path: "/reports",
-    //   for_role: ["admin"],
+    //   for_role: ["user", "admin"],
     //   icon: <TbReportSearch className="scale-150" />,
     // },
     {
       id: "calculator",
       title: "Калькулятор",
       path: "/calculator",
-      for_role: ["admin"],
+      for_role: ["user", "admin"],
       icon: <GiCalculator className="scale-150" />,
     },
   ];

@@ -128,9 +128,27 @@
   box-shadow: 0 0 0 5 #1e40af !important;
 }
 
-
 .successful-purchase .ant-modal-header .ant-modal-title {
   text-align: center;
   font-size: 24px;
   color: green;
+}
+
+.ant-table-column-sorter-up > svg,
+.ant-table-column-sorter-down > svg {
+  fill: white !important;
+}
+
+.ant-table-column-sorters::after:focus {
+  background-color: red;
+}
+
+.ant-table-thead > tr > th.ant-table-column-sort {
+  background: #003a6b !important;
+  color: white !important;
+}
+
+.ant-table-thead > tr > th.ant-table-column-sort:hover,
+.ant-table-thead > tr > th.ant-table-column-has-sorters:hover {
+  background: #305cde !important;
 }

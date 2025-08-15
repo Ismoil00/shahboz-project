@@ -6,6 +6,7 @@ export const HomePageTableColumns: TableProps<HomePageTableProps>["columns"] = [
     key: "code",
     dataIndex: "code",
     title: "Код Товара",
+    sorter: (a, b) => a.code - b.code,
   },
   {
     key: "name",
@@ -21,10 +22,12 @@ export const HomePageTableColumns: TableProps<HomePageTableProps>["columns"] = [
     key: "price",
     dataIndex: "price",
     title: "Цена",
+    sorter: (a, b) => a.price - b.price,
   },
   {
     key: "in_stock",
     dataIndex: "in_stock",
     title: "Доступное Количество",
+    sorter: (a, b) => a.in_stock - b.in_stock,
   },
 ];

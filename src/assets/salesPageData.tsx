@@ -19,6 +19,7 @@ export const SalesTableColumns: TableProps<SalesProps>["columns"] = [
     key: "total_quantity",
     dataIndex: "total_quantity",
     title: "Продано в количестве",
+    sorter: (a, b) => a.total_quantity - b.total_quantity,
   },
   {
     key: "seller",
@@ -29,6 +30,7 @@ export const SalesTableColumns: TableProps<SalesProps>["columns"] = [
     key: "total_price",
     dataIndex: "total_price",
     title: "Сумма",
+    sorter: (a, b) => a.total_price - b.total_price,
   },
   {
     key: "sold",

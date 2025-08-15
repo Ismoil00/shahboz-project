@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import type { SidebarMenuItem } from "../../assets/sidebar";
 import { renderSidebar } from "../../assets/sidebar";
 import { useContext } from "react";
 import { GlobalStates } from "../../globalStates";
+import { useLocation } from "react-router-dom";
 
 export default function SidebarListItems({ version }: { version: string }) {
-  const [active, setActive] = useState<string>("home");
+  const location = useLocation();
+  const [active, setActive] = useState<string>("/home");
   const { getSession } = useContext(GlobalStates);
   const session = getSession();
+
+  useEffect(() => setActive(location.pathname), []);
 
   return (
     <ul
@@ -16,7 +20,7 @@ export default function SidebarListItems({ version }: { version: string }) {
         version === "mobile" ? "" : "pt-10 h-full"
       }`}
     >
-      <Link to="/" onClick={() => setActive("home")}>
+      <Link to="/" onClick={() => setActive("/home")}>
         <img
           src="/public/logo.png"
           alt="website logo"
@@ -29,12 +33,12 @@ export default function SidebarListItems({ version }: { version: string }) {
             <li
               key={menu.id}
               className="group/li"
-              onClick={() => setActive(menu.id)}
+              onClick={() => setActive(menu.path)}
             >
               <Link
                 to={menu.path}
                 className={`flex flex-col items-center gap-2 tracking-wider hover:text-hover-text transition duration-200 ${
-                  active === menu.id ? "text-hover-text" : "text-default-text"
+                  active === menu.path ? "text-hover-text" : "text-default-text"
                 }`}
               >
                 {menu.icon}

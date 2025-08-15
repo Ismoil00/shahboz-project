@@ -34,6 +34,7 @@ export const GetDebtPageTableColumns = (
     key: "total_price",
     dataIndex: "total_price",
     title: "Полная Сумма",
+    sorter: (a, b) => a.total_price - b.total_price,
   },
   {
     key: "remaining_debt",
