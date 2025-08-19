@@ -1,18 +1,9 @@
-import type { JSX } from "react";
+import type { SidebarMenuItem } from "./types";
 import { GoHomeFill } from "react-icons/go";
 import { AiFillProduct } from "react-icons/ai";
 import { FcDebt } from "react-icons/fc";
-// import { TbReportSearch } from "react-icons/tb";
 import { FcSalesPerformance } from "react-icons/fc";
 import { GiCalculator } from "react-icons/gi";
-
-export interface SidebarMenuItem {
-  id: string;
-  title: string;
-  path: string;
-  for_role: string[];
-  icon: JSX.Element;
-}
 
 export const renderSidebar = (): SidebarMenuItem[] => {
   return [
@@ -44,13 +35,6 @@ export const renderSidebar = (): SidebarMenuItem[] => {
       for_role: ["user", "admin"],
       icon: <FcDebt className="scale-150" />,
     },
-    // {
-    //   id: "reports",
-    //   title: "Отчеты",
-    //   path: "/reports",
-    //   for_role: ["user", "admin"],
-    //   icon: <TbReportSearch className="scale-150" />,
-    // },
     {
       id: "calculator",
       title: "Калькулятор",

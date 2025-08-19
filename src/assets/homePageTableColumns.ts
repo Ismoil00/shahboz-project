@@ -12,13 +12,8 @@ export const HomePageTableColumns: TableProps<HomePageTableProps>["columns"] = [
     key: "name",
     dataIndex: "name",
     title: "Название",
-    sorter: (a, b) => a.name.localeCompare(b.name), // alphabetical sort
+    sorter: (a, b) => a.name.localeCompare(b.name),
   },
-  // {
-  //   key: "description",
-  //   dataIndex: "description",
-  //   title: "Описание",
-  // },
   {
     key: "price",
     dataIndex: "price",

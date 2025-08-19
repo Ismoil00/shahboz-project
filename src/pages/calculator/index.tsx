@@ -21,7 +21,11 @@ function Calculator() {
     try {
       setLoader(true);
       /* SERVER REQUEST */
-      const response = await customServerRequest(``);
+      const response = await customServerRequest(
+        `calculate-percentages/`,
+        "POST",
+        
+      );
 
       /* HTTP ERROR HANDLE */
       if (Number(response.status.toString()[0]) !== 2) throw response;

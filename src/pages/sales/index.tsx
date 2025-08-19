@@ -87,7 +87,7 @@ function Sales() {
               columns={SalesTableColumns}
               dataSource={purchase.sales}
               className="homePageTableHeader"
-              onRow={(r, _) => ({
+              onRow={(_r, _) => ({
                 style: {
                   backgroundColor: "#fafafa",
                   color: "#003A6B",
