@@ -15,13 +15,17 @@ function Sales() {
   const [loader, setLoader] = useState(false);
   const [purchase, setPurchase] = useState<PurchaseProps>({} as PurchaseProps);
   const [chosenPeriod, setChosenPeriod] = useState("");
+  const [totalCount, setTotalCount] = useState(0);
+  const [page, setPage] = useState(1);
 
   const handleDropdownSelection = async (key: string) => {
     try {
       setLoader(true);
 
       /* SERVER REQUEST */
-      const response = await customServerRequest(`purchase/${key}/`);
+      const response = await customServerRequest(
+        `purchase/${key}/?page=${page}`
+      );
 
       /* HTTP ERROR HANDLE */
       if (Number(response.status.toString()[0]) !== 2) throw response;
@@ -29,6 +33,7 @@ function Sales() {
       const data = await response.json();
       if (data.total_price === 0 && data.sales.length === 0)
         throw new Error("Запись не найдено");
+      console.log("data", data);
 
       /* SUCCESS */
       Notify("Данные Успешно Получены", "success");
@@ -87,6 +92,12 @@ function Sales() {
               columns={SalesTableColumns}
               dataSource={purchase.sales}
               className="homePageTableHeader"
+              pagination={{
+                current: page,
+                pageSize: 10,
+                total: totalCount,
+                onChange: (page) => setPage(page),
+              }}
               onRow={(_r, _) => ({
                 style: {
                   backgroundColor: "#fafafa",

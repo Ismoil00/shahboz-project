@@ -41,6 +41,7 @@ export interface HomePageTableProps {
   key: string | number;
   code: number;
   name: string;
+  image: string;
   description: string;
   price: number;
   in_stock: number;
@@ -51,6 +52,7 @@ export interface ProductProps {
   id: number;
   code: number;
   name: string;
+  image: string;
   description: string;
   price: number;
   in_stock: number;
@@ -79,7 +81,7 @@ export interface DebtsPageTableProps {
   sold_at: string;
   total_price: number;
   remaining_debt: number;
-  
+
   quantity?: number;
   not_paid?: boolean;
   payment_type?: string;

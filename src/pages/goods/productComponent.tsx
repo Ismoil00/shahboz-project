@@ -55,7 +55,7 @@ const ProductComponent = ({
         ></div>
       )}
       <img
-        src="public/product-icon.png"
+        src={product.image || "public/product-icon.png"}
         alt="product image"
         className="w-full h-52 object-cover rounded-t-2xl"
       />

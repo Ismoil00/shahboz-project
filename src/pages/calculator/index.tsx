@@ -23,8 +23,7 @@ function Calculator() {
       /* SERVER REQUEST */
       const response = await customServerRequest(
         `calculate-percentages/`,
-        "POST",
-        
+        "POST"
       );
 
       /* HTTP ERROR HANDLE */

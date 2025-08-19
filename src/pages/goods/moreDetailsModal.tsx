@@ -16,7 +16,7 @@ const MoreDetailsModal = ({
       style={{ top: 20 }}
     >
       <img
-        src="public/product-icon.png"
+        src={moreDetailsProduct.image || "public/product-icon.png"}
         alt="product image"
         className="w-full object-cover rounded-t-2xl"
       />
