@@ -55,7 +55,7 @@ const Depts = () => {
     };
 
     fetchTableData();
-  }, [paidRefresh]);
+  }, [paidRefresh, page]);
 
   /* paying debt */
   const handlePayClick = async () => {
@@ -92,7 +92,7 @@ const Depts = () => {
 
       /* SERVER REQUEST */
       const response = await customServerRequest(
-        `debtors/?search=${searchedText}&page=${page}`
+        `debtors/?search=${searchedText}&page=${1}`
       );
 
       /* HTTP ERROR HANDLE */

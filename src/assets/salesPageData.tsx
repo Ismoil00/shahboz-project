@@ -8,7 +8,7 @@ export const SalesTableColumns: TableProps<SalesProps>["columns"] = [
   {
     key: "row_number",
     title: "№",
-    render: (record) => <span>{record.key}</span>,
+    render: (record) => <span>{record.purchase_id}</span>,
   },
   {
     key: "product_name",

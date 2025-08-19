@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import customServerRequest from "../../components/customFetch";
 import Notify from "../../components/toast";
 import Spinner from "../../components/spinner";
@@ -17,41 +17,46 @@ function Sales() {
   const [chosenPeriod, setChosenPeriod] = useState("");
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(1);
+  const [period, setPeriod] = useState("");
 
-  const handleDropdownSelection = async (key: string) => {
-    try {
-      setLoader(true);
+  useEffect(() => {
+    const handleSearch = async () => {
+      try {
+        setLoader(true);
 
-      /* SERVER REQUEST */
-      const response = await customServerRequest(
-        `purchase/${key}/?page=${page}`
-      );
+        /* SERVER REQUEST */
+        const response = await customServerRequest(
+          `purchase/${period}/?page=${page}`
+        );
 
-      /* HTTP ERROR HANDLE */
-      if (Number(response.status.toString()[0]) !== 2) throw response;
+        /* HTTP ERROR HANDLE */
+        if (Number(response.status.toString()[0]) !== 2) throw response;
 
-      const data = await response.json();
-      if (data.total_price === 0 && data.sales.length === 0)
-        throw new Error("Запись не найдено");
-      console.log("data", data);
+        const data = await response.json();
+        if (data.total_price === 0 && data.sales.length === 0)
+          throw new Error("Запись не найдено");
 
-      /* SUCCESS */
-      Notify("Данные Успешно Получены", "success");
-      setPurchase({
-        ...data,
-        sales: data.sales.map((el: SalesProps, index: number) => ({
-          ...el,
-          key: index + 1,
-        })),
-      });
-    } catch (error: any) {
-      Notify(error?.message || `HOME PAGE TABLE DATA FETCH ERROR`, "error");
-      console.error("HOME PAGE TABLE DATA FETCH ERROR: ", error);
-      setPurchase({} as PurchaseProps);
-    } finally {
-      setLoader(false);
-    }
-  };
+        /* SUCCESS */
+        Notify("Данные Успешно Получены", "success");
+        setPurchase({
+          ...data,
+          sales: data.sales.map((el: SalesProps, index: number) => ({
+            ...el,
+            key: index + 1,
+          })),
+        });
+        setTotalCount(data.total_records || 0);
+      } catch (error: any) {
+        Notify(error?.message || `HOME PAGE TABLE DATA FETCH ERROR`, "error");
+        console.error("HOME PAGE TABLE DATA FETCH ERROR: ", error);
+        setPurchase({} as PurchaseProps);
+      } finally {
+        setLoader(false);
+      }
+    };
+
+    if (period !== "") handleSearch();
+  }, [period, page]);
 
   return (
     <div className="pl-[150px]">
@@ -78,8 +83,9 @@ function Sales() {
                     ? "За месяц"
                     : ""
                 );
-                handleDropdownSelection(key);
+                setPeriod(key);
               }}
+              defaultValue={period}
               dropdownTailwindcss="border-[#003a6b]/10! border-1! py-1! px-2! rounded-sm! hover:bg-[#003a6b]/10! hover:border-[#003a6b]/20! transition! duration-200!"
             />
           </div>
