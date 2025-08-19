@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import type { SidebarMenuItem } from "../../assets/sidebar";
+import type { SidebarMenuItem } from "../../assets/types";
 import { renderSidebar } from "../../assets/sidebar";
 import { useContext } from "react";
 import { GlobalStates } from "../../globalStates";

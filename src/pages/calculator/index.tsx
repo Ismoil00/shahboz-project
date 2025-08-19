@@ -30,7 +30,7 @@ function Calculator() {
       /* HTTP ERROR HANDLE */
       if (Number(response.status.toString()[0]) !== 2) throw response;
 
-      const data = await response.json();
+      // const data = await response.json();
       // if (data.results.length === 0 && data.count === 0)
       //   throw new Error("Запись не найдено");
 
