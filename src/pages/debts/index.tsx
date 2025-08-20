@@ -27,10 +27,14 @@ const Depts = () => {
   /* DEBTS FETCH */
   useEffect(() => {
     const fetchTableData = async () => {
+      setLoader(true);
       try {
-        setLoader(true);
+        const URL =
+          searchedText === ""
+            ? `debtors/?page=${page}`
+            : `debtors/?search=${searchedText}&page=${page}`;
         /* SERVER REQUEST */
-        const response = await customServerRequest(`debtors/?page=${page}`);
+        const response = await customServerRequest(URL);
 
         /* HTTP ERROR HANDLE */
         if (Number(response.status.toString()[0]) !== 2) throw response;
@@ -85,41 +89,12 @@ const Depts = () => {
     setPayDebt((p) => ({ ...p, [key]: value }));
   };
 
-  /* finding items based on searched keywords */
-  const handleSearch = async () => {
-    try {
-      setLoader(true);
-
-      /* SERVER REQUEST */
-      const response = await customServerRequest(
-        `debtors/?search=${searchedText}&page=${1}`
-      );
-
-      /* HTTP ERROR HANDLE */
-      if (Number(response.status.toString()[0]) !== 2) throw response;
-
-      const data = await response.json();
-      if (data.results.length === 0 && data.count === 0)
-        throw new Error("Запись не найдено");
-
-      /* SUCCESS */
-      setTotalCount(data.count);
-      setTableData(
-        data.results.map((el: DebtsPageTableProps) => ({ ...el, key: el.id }))
-      );
-      Notify("Поиск Данных Успешно Сделано", "success");
-    } catch (error: any) {
-      Notify(error?.message || "SEARCHED PRODUCTS FETCH ERROR", "error");
-      setTableData([]);
-      console.error("SEARCHED PRODUCTS FETCH ERROR: ", error);
-    } finally {
-      setLoader(false);
-    }
-  };
-
   /* Enter press */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") handleSearch();
+    if (e.key === "Enter") {
+      setPage(1);
+      setPaidRefresh((p) => p + 1);
+    }
   };
 
   return (
@@ -137,7 +112,10 @@ const Depts = () => {
             <SearchBar
               searchedText={searchedText}
               setSearchedText={setSearchedText}
-              handleSearch={handleSearch}
+              handleSearch={() => {
+                setPage(1);
+                setPaidRefresh((p) => p + 1);
+              }}
               placeholder="Поиск по имени и телефону клиента (нажмите ENTER)"
               onKeyDown={handleKeyDown}
             />

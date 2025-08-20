@@ -23,7 +23,7 @@ export interface InputType {
 export interface SearchBarCompProps {
   searchedText: string;
   setSearchedText: React.Dispatch<React.SetStateAction<string>>;
-  handleSearch: () => Promise<void>;
+  handleSearch: () => void;
   placeholder?: string;
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement> | undefined;
 }
