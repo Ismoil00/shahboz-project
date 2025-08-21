@@ -18,6 +18,7 @@ export interface InputType {
   inputTailwindUtilities?: string | undefined;
   labelTailwindUtilities?: string | undefined;
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement> | undefined;
+  disabled?: boolean;
 }
 
 export interface SearchBarCompProps {
