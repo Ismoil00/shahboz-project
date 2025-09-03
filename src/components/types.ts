@@ -18,12 +18,13 @@ export interface InputType {
   inputTailwindUtilities?: string | undefined;
   labelTailwindUtilities?: string | undefined;
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement> | undefined;
+  disabled?: boolean;
 }
 
 export interface SearchBarCompProps {
   searchedText: string;
   setSearchedText: React.Dispatch<React.SetStateAction<string>>;
-  handleSearch: () => Promise<void>;
+  handleSearch: () => void;
   placeholder?: string;
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement> | undefined;
 }

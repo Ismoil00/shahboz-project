@@ -6,16 +6,17 @@ import Notify from "../../components/toast";
 import Spinner from "../../components/spinner";
 import type { PartnerProps } from "./types";
 import PartnersList from "./partnersList";
+import type { CalculationResponseType } from "./types";
+
+const initPartner = {
+  id: Number(new Date()),
+  amount: 0,
+  fullname: "",
+};
 
 function Calculator() {
   const [loader, setLoader] = useState(false);
-  const [partners, setPartners] = useState<PartnerProps[]>([
-    {
-      id: 1,
-      amount: 100,
-      fullname: "testov test testovich",
-    },
-  ]);
+  const [partners, setPartners] = useState<PartnerProps[]>([initPartner]);
 
   const handleCalculation = async () => {
     try {
@@ -23,17 +24,23 @@ function Calculator() {
       /* SERVER REQUEST */
       const response = await customServerRequest(
         `calculate-percentages/`,
-        "POST"
+        "POST",
+        partners
       );
 
       /* HTTP ERROR HANDLE */
       if (Number(response.status.toString()[0]) !== 2) throw response;
 
-      // const data = await response.json();
-      // if (data.results.length === 0 && data.count === 0)
-      //   throw new Error("Запись не найдено");
+      const data = await response.json();
+      if (data.length === 0) throw new Error("Расчет не сделан");
 
       /* SUCCESS */
+      setPartners((p) =>
+        data.map((del: CalculationResponseType) => ({
+          ...p.find((pel) => del.id === pel.id),
+          percent: del.percent,
+        }))
+      );
       Notify("Расчет прошел успешно", "success");
     } catch (error: any) {
       Notify("CALCULATION ERROR", "error");
@@ -56,11 +63,16 @@ function Calculator() {
 
           <PartnersList partners={partners} setPartners={setPartners} />
 
-          <div className="grid place-content-center mt-10">
+          <div className="mt-10 flex gap-5 justify-center items-center">
             <Button
               text="Постичать"
               onClick={handleCalculation}
               tailwindUtilities="w-[150px]! hover:bg-hover-text! px-0! py-2!"
+            />
+            <Button
+              text="Очистить все"
+              onClick={() => setPartners([initPartner])}
+              tailwindUtilities="w-[150px]! hover:bg-secondary/80! px-0! py-2! bg-secondary!"
             />
           </div>
         </>

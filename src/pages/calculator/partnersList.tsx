@@ -38,23 +38,40 @@ function PartnersList({ partners, setPartners }: PartnersListProps) {
           <Input
             name="fullname"
             placeholder="Введите ФИО Партнёра"
+            label="ФИО Партнёра"
             type="text"
             value={partner.fullname}
             onChange={(e) =>
               handlePartnersChange(partner.id, "fullname", e.target.value)
             }
-            inputTailwindUtilities="ring-hover-text/30! focus:ring-hover-text/60! ring-1! rounded-xl! px-3! py-2! w-[200px]! focus:bg-bg/50"
+            inputTailwindUtilities="ring-hover-text/30! focus:ring-hover-text/60! ring-1! rounded-xl! px-3! py-2! w-[200px]! focus:bg-bg/50 -mt-1!"
+            labelTailwindUtilities="mt-3 pl-1"
           />
           <Input
             name="amount"
             placeholder="Введите Сумму"
+            label="Сумма"
             type="number"
             value={partner.amount}
             onChange={(e) =>
               handlePartnersChange(partner.id, "amount", e.target.value)
             }
-            inputTailwindUtilities="ring-hover-text/30! focus:ring-hover-text/60! ring-1! rounded-xl! px-3! py-2! w-[200px]! focus:bg-bg/50"
+            inputTailwindUtilities="ring-hover-text/30 focus:ring-hover-text/60 ring-1! rounded-xl! px-3! py-2! w-[200px]! focus:bg-bg/50 -mt-1!"
+            labelTailwindUtilities="mt-3 pl-1"
           />
+          {partner.percent && (
+            <Input
+              name="amount"
+              placeholder="Процент"
+              label="Процент"
+              type="number"
+              value={partner.percent}
+              onChange={() => {}}
+              inputTailwindUtilities="ring-hover-text/30 focus:ring-hover-text/60 ring-1! rounded-xl! px-3! py-2! w-[200px]! focus:bg-bg/50 -mt-1!"
+              labelTailwindUtilities="mt-3 pl-1"
+              disabled={true}
+            />
+          )}
         </section>
       ))}
       <BsFilePlusFill
