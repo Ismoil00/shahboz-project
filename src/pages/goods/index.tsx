@@ -37,7 +37,7 @@ const Goods = () => {
   /* we inform user about successful purchase */
   const [purchaseSuccessModal, setPurchaseSuccessModal] = useState(false);
   const [purchaseSuccessInfo, setPurchaseSuccessInfo] =
-    useState<PurchaseSuccessInfoProps>({ total_purchase: 0 });
+    useState<PurchaseSuccessInfoProps>({ total_purchase: 0, purchases: [] });
 
   /* we display the home-page-products on this page */
   useEffect(() => {
@@ -95,7 +95,10 @@ const Goods = () => {
       Notify("Покупка Успешно Сделана", "success");
       setChosenProducts([]);
       setProducts([]);
-      setPurchaseSuccessInfo({ total_purchase: data.total_purchase });
+      setPurchaseSuccessInfo({
+        total_purchase: data.total_purchase,
+        purchases: data.purchases,
+      });
       setPurchaseSuccessModal(true);
       setChosenProductsModal(false);
     } catch (error: any) {

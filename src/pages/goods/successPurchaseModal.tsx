@@ -14,17 +14,34 @@ function SuccessPurchaseModal({
       onCancel={() => setPurchaseSuccessModal(false)}
       wrapClassName="successful-purchase"
       footer={false}
-      // style={{ top: 20 }}
     >
       <div className="flex items-center justify-center my-5">
-        <FaRegCheckCircle size={80} color="green" />
+        <FaRegCheckCircle size={50} color="green" />
       </div>
-      <div className="flex items-center justify-center my-5 text-2xl">
-        Ваш Чек:
-        <span className="text-[#008000] ml-2 font-semibold">
-          {purchaseSuccessInfo.total_purchase}
-        </span>
-      </div>
+      <article className="w-[400px] flex flex-col gap-[10px] m-auto">
+        {purchaseSuccessInfo.purchases.map((el: any, i: number) => (
+          <section key={i} className="w-full flex justify-between">
+            <section className="flex gap-1">
+              <div className="w-[30px]">{el.quantity}</div>
+              <div className="w-[150px]">{el.product}</div>
+            </section>
+            <div className="w-[80px] text-right">{el.total_price}</div>
+          </section>
+        ))}
+        <section className="w-full flex justify-between border-t-[1px] border-t-[#008000]/20">
+          <section className="flex gap-1">
+            <div className="w-[30px] font-semibold text-lg">
+              {purchaseSuccessInfo.purchases.reduce((acc: number, el: any) => {
+                return (acc = acc + el.quantity);
+              }, 0)}
+            </div>
+            <div className="w-[150px] font-semibold text-lg">Всего</div>
+          </section>
+          <div className="w-[80px] text-right font-semibold text-lg">
+            {purchaseSuccessInfo.total_purchase}
+          </div>
+        </section>
+      </article>
     </Modal>
   );
 }

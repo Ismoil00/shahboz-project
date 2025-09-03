@@ -21,14 +21,29 @@ export interface ProductComponentProps {
 
 export interface ChosenProductsModalProps {
   chosenProducts: PurchaseProductProps[];
-  setChosenProducts: React.Dispatch<React.SetStateAction<PurchaseProductProps[]>>;
+  setChosenProducts: React.Dispatch<
+    React.SetStateAction<PurchaseProductProps[]>
+  >;
   chosenProductsModal: boolean;
   setChosenProductsModal: React.Dispatch<React.SetStateAction<boolean>>;
-  handlePurchaseSave: () => Promise<void>
+  handlePurchaseSave: () => Promise<void>;
+}
+
+export interface PurchaseProps {
+  user: number;
+  client_name: string;
+  client_number: number;
+  product: number;
+  quantity: number;
+  not_paid: boolean;
+  payment_type: "cash" | "non-cash";
+  total_price: string | number;
+  paid_amount: string | number;
 }
 
 export interface PurchaseSuccessInfoProps {
   total_purchase: number;
+  purchases: PurchaseProps[];
 }
 
 export interface SuccessPurchaseModalProps {
