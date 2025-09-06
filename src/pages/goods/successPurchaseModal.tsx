@@ -34,7 +34,7 @@ function SuccessPurchaseModal({
           <section key={i} className="w-full flex justify-between">
             <section className="flex gap-1">
               <div className="w-[30px]">{el.quantity}</div>
-              <div className="w-[150px]">{el.product}</div>
+              <div className="w-[150px]">{el.product_name}</div>
             </section>
             <div className="w-[80px] text-right">{el.total_price}</div>
           </section>

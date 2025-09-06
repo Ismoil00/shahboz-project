@@ -34,6 +34,7 @@ export interface PurchaseProps {
   client_name: string;
   client_number: number;
   product: number;
+  product_name: string;
   quantity: number;
   not_paid: boolean;
   payment_type: "cash" | "non-cash";

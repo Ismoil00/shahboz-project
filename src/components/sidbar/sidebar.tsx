@@ -22,7 +22,7 @@ export default function SidebarListItems({ version }: { version: string }) {
     >
       <Link to="/" onClick={() => setActive("/home")}>
         <img
-          src="/public/logo.png"
+          src="/logo.png"
           alt="website logo"
           className="w-16 hover:scale-105 duration-100 transition ease-in hover:drop-shadow-2xl"
         />
